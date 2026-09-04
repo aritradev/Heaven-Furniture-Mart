@@ -5,7 +5,7 @@ import styles from './Footer.module.css';
 
 export default function Footer() {
   return (
-    <footer className={styles.footer}>
+    <footer className={styles.footer} id="footer">
       <div className={`container ${styles.inner}`}>
         {/* Brand */}
         <div className={styles.brand}>

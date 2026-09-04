@@ -10,6 +10,7 @@ import Testimonials from '../components/Testimonials';
 import ShowroomSection from '../components/ShowroomSection';
 import Footer from '../components/Footer';
 import MobileCTA from '../components/MobileCTA';
+import ScrollBottomBlur from '../components/ScrollBottomBlur';
 
 import Logo from '../components/Logo';
 
@@ -61,6 +62,7 @@ export default function Home() {
       </main>
       <Footer />
       <MobileCTA />
+      <ScrollBottomBlur />
     </>
   );
 }

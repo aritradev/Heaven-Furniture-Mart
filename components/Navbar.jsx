@@ -94,23 +94,37 @@ export default function Navbar() {
   useEffect(() => {
     const sectionIds = ['about', 'catalog', 'bespoke-process', 'testimonials', 'visit'];
     const handleSectionObserve = () => {
+      // Clear active section highlight when in Hero section (at top of page)
+      if (window.scrollY < 300) {
+        setActiveSection('');
+        return;
+      }
+
       const scrollPosition = window.scrollY + 250;
+      let currentActive = '';
+
       for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (element) {
           const top = element.offsetTop;
           const height = element.offsetHeight;
           if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(id);
+            currentActive = id;
             break;
           }
         }
       }
+
+      setActiveSection(currentActive);
     };
 
     handleSectionObserve();
     window.addEventListener('scroll', handleSectionObserve, { passive: true });
-    return () => window.removeEventListener('scroll', handleSectionObserve);
+    window.addEventListener('resize', handleSectionObserve, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', handleSectionObserve);
+      window.removeEventListener('resize', handleSectionObserve);
+    };
   }, []);
 
   return (

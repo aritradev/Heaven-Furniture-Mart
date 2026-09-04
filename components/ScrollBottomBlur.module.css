@@ -1,0 +1,51 @@
+/* Viewport Bottom Scroll Blur Overlay (Subtle Frosted Finish) */
+.blurOverlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 15vh;
+  min-height: 80px;
+  max-height: 160px;
+  pointer-events: none;
+  z-index: 8000;
+  opacity: 0;
+  transition: opacity 500ms cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(6px) saturate(120%);
+  -webkit-backdrop-filter: blur(6px) saturate(120%);
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.25) 40%,
+    rgba(0, 0, 0, 0.7) 80%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  mask-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.25) 40%,
+    rgba(0, 0, 0, 0.7) 80%,
+    rgba(0, 0, 0, 0.9) 100%
+  );
+  background: linear-gradient(
+    to bottom,
+    rgba(13, 27, 30, 0) 0%,
+    rgba(13, 27, 30, 0.06) 50%,
+    rgba(13, 27, 30, 0.18) 100%
+  );
+}
+
+.blurOverlay.visible {
+  opacity: 1;
+}
+
+/* ─── Small & Medium Devices (<= 900px) Adjustment ───
+   Position the blur overlay directly ABOVE the bottom navigation bar (64px + safe area)
+   so that mobile/tablet bottom navigation bar buttons and icons remain 100% sharp and unblurred. */
+@media (max-width: 900px) {
+  .blurOverlay {
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    height: 14vh;
+    min-height: 70px;
+  }
+}

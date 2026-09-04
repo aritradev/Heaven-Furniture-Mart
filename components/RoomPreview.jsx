@@ -302,6 +302,16 @@ export default function RoomPreview({ item, onClose }) {
     }
   };
 
+  const useEyeDropperForFloor = async () => {
+    try {
+      const { sRGBHex } = await new window.EyeDropper().open();
+      setFloor(sRGBHex);
+      setNote(`Sampled floor colour ${sRGBHex.toUpperCase()} from your screen.`);
+    } catch {
+      // The picker was dismissed — nothing to report.
+    }
+  };
+
   /* ── take it away ────────────────────────────────────────────
      A flat redraw of the scene, because a CSS composite cannot be read back
      off the screen. Same partition, same tones, same shadow hierarchy. */
@@ -332,11 +342,11 @@ export default function RoomPreview({ item, onClose }) {
 
       ctx.fillStyle = floor;
       ctx.fillRect(0, horizon, S, S - horizon - footer);
-      const depth = ctx.createLinearGradient(0, horizon, 0, S - footer);
-      depth.addColorStop(0, 'rgba(0,0,0,0.22)');
-      depth.addColorStop(0.45, 'rgba(0,0,0,0.02)');
-      depth.addColorStop(1, 'rgba(255,255,255,0.08)');
-      ctx.fillStyle = depth;
+      const floorDepthGrad = ctx.createLinearGradient(0, horizon, 0, S - footer);
+      floorDepthGrad.addColorStop(0, 'rgba(0,0,0,0.22)');
+      floorDepthGrad.addColorStop(0.45, 'rgba(0,0,0,0.02)');
+      floorDepthGrad.addColorStop(1, 'rgba(255,255,255,0.08)');
+      ctx.fillStyle = floorDepthGrad;
       ctx.fillRect(0, horizon, S, S - horizon - footer);
 
       // Baseboard.
@@ -371,8 +381,8 @@ export default function RoomPreview({ item, onClose }) {
       const { spread, drop, density, skew } = light.shadow;
       ctx.save();
       ctx.globalCompositeOperation = 'multiply';
-      ctx.translate(drawX + drawW / 2 + skew * 2, baseY - depth * drawH * 0.25);
-      ctx.scale(drawW * 0.62 * spread, drawH * (0.1 * (0.6 + drop) + depth * 0.5));
+      ctx.translate(drawX + drawW / 2 + skew * 2, baseY - stands * drawH * 0.25);
+      ctx.scale(drawW * 0.62 * spread, drawH * (0.1 * (0.6 + drop) + stands * 0.5));
       const ambient = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
       const [sr, sg, sb] = toRgb(mix(floor, '#1A1008', 0.82));
       ambient.addColorStop(0, `rgba(${sr},${sg},${sb},${density})`);
@@ -594,7 +604,15 @@ export default function RoomPreview({ item, onClose }) {
             </section>
 
             <section className={styles.group}>
-              <h4 className={styles.groupTitle}>Floor</h4>
+              <h4 className={styles.groupTitle}>
+                Floor
+                <span className={styles.chip} style={{
+                  background: floor,
+                  color: luminance(floor) > 0.6 ? '#2C1810' : '#FFFFFF',
+                }}>
+                  {floorName || floor.toUpperCase()}
+                </span>
+              </h4>
               <div className={styles.pills}>
                 {FLOORS.map((f) => (
                   <button
@@ -609,6 +627,24 @@ export default function RoomPreview({ item, onClose }) {
                     {f.name}
                   </button>
                 ))}
+              </div>
+
+              <div className={styles.pickRow} style={{ marginTop: '0.4rem' }}>
+                <label className={styles.pickLabel}>
+                  <input
+                    type="color"
+                    value={floor}
+                    onChange={(e) => setFloor(e.target.value)}
+                    aria-label="Choose an exact floor colour"
+                  />
+                  Exact floor colour
+                </label>
+
+                {eyeDropperSupported && (
+                  <button className={styles.pickBtn} onClick={useEyeDropperForFloor}>
+                    <Dropper /> Pick from screen
+                  </button>
+                )}
               </div>
             </section>
 

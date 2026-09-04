@@ -100,7 +100,7 @@
   left: 0 !important;
   right: 0 !important;
   z-index: 9999 !important;
-  height: 64px;
+  height: calc(64px + env(safe-area-inset-bottom, 0px));
   background: rgba(13, 27, 30, 0.96) !important;
   backdrop-filter: blur(20px) !important;
   -webkit-backdrop-filter: blur(20px) !important;

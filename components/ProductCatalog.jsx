@@ -16,6 +16,7 @@ export const CATALOG_PRODUCTS = [
     category: 'living',
     categoryLabel: 'Living Room',
     price: '৳185,000',
+    bgColor: '#b0030e',
     hook: 'The drawing room centerpiece your guests will admire and remember.',
     description: 'Hand-sculpted by Chattogram artisans from seasoned Chittagong teak. Upholstered in treated cream velvet that repels dark tea, oil, and everyday spills without staining.',
     image: images.classicSofa,
@@ -34,6 +35,7 @@ export const CATALOG_PRODUCTS = [
     category: 'living',
     categoryLabel: 'Living Room',
     price: '৳145,000',
+    bgColor: '#7b0d17',
     hook: 'Two statement armchairs that instantly elevate the tone of your living space.',
     description: 'Deep cobalt velvet framed by hand-applied gold leaf filigree. Designed as a conversation pair for formal lounges or master bedroom corners.',
     image: images.blueSofaPair,
@@ -51,6 +53,7 @@ export const CATALOG_PRODUCTS = [
     category: 'living',
     categoryLabel: 'Living Room',
     price: '৳195,000',
+    bgColor: '#96111f',
     hook: 'Adaptable seating designed for fluid spaces and growing families.',
     description: 'Wrapped in neutral woven linen with movable chaise components. Easily reconfigures from an expansive L-corner into standalone seating modules.',
     image: images.modularSofa,
@@ -68,6 +71,7 @@ export const CATALOG_PRODUCTS = [
     category: 'living',
     categoryLabel: 'Living Room',
     price: '৳88,000',
+    bgColor: '#8a101a',
     hook: 'A lit gallery cabinet for heirloom china, awards, and cherished keepsakes.',
     description: 'Rich mahogany frame with integrated warm spotlights that illuminate every shelf. Features brass key locks to protect delicate valuables.',
     image: images.glassShowcase,
@@ -85,6 +89,7 @@ export const CATALOG_PRODUCTS = [
     category: 'living',
     categoryLabel: 'Living Room',
     price: '৳42,000',
+    bgColor: '#901c26',
     hook: 'Organized entryway storage disguised as a sleek contemporary console.',
     description: 'Satin black timber accented with brushed brass pull handles. Features soft-closing doors that shut noiselessly every single time.',
     image: images.shoeCabinet,
@@ -104,6 +109,7 @@ export const CATALOG_PRODUCTS = [
     category: 'bedroom',
     categoryLabel: 'Bedroom',
     price: '৳165,000',
+    bgColor: '#69000b',
     hook: 'Deep jewel-toned upholstery crafted for luxurious, restful sleep.',
     description: 'Hand-tufted emerald green headboard framed in brass metallic trim. Supported by a noise-free steel slat system that eliminates squeaks.',
     image: images.emeraldBed,
@@ -121,6 +127,7 @@ export const CATALOG_PRODUCTS = [
     category: 'bedroom',
     categoryLabel: 'Bedroom',
     price: '৳155,000',
+    bgColor: '#870e19',
     hook: 'Seamless architectural design featuring built-in bedside nightstands.',
     description: 'Deep aqua upholstery with floating side drawers. Streamlines your bedroom suite into one unified purchase.',
     image: images.tealBed,
@@ -138,6 +145,7 @@ export const CATALOG_PRODUCTS = [
     category: 'bedroom',
     categoryLabel: 'Bedroom',
     price: '৳175,000',
+    bgColor: '#7e0211',
     hook: 'Our master bedroom flagship, constructed with heirloom solid teak.',
     description: 'Deep midnight navy upholstery set within a carved teak frame and warm brass accents. Built to last for generations.',
     image: images.navyBed,
@@ -155,6 +163,7 @@ export const CATALOG_PRODUCTS = [
     category: 'bedroom',
     categoryLabel: 'Bedroom',
     price: '৳125,000',
+    bgColor: '#8d0713',
     hook: 'Clean Scandi aesthetic paired with spacious under-bed storage drawers.',
     description: 'Multi-layered satin white finish over a durable timber core. Conceals massive sliding under-bed drawers for extra linens and luggage.',
     image: images.whiteBed,
@@ -174,6 +183,7 @@ export const CATALOG_PRODUCTS = [
     category: 'dining',
     categoryLabel: 'Dining Room',
     price: '৳210,000',
+    bgColor: '#800f15',
     hook: 'Calacatta marble paired with Nappa leather for memorable family feasts.',
     description: 'Polished natural stone surface treated with a protective seal. Accompanied by 6 plush Nappa leather chairs for long dinner conversations.',
     image: images.marbleDining,
@@ -191,6 +201,7 @@ export const CATALOG_PRODUCTS = [
     category: 'dining',
     categoryLabel: 'Dining Room',
     price: '৳180,000',
+    bgColor: '#7e0f19',
     hook: 'Artisanal floral woodwork brought to life in solid Chittagong teak.',
     description: 'Classic heritage table surrounded by 6 intricately detailed chairs. Polished in a warm lustrous finish that deepens in character over time.',
     image: images.diningTable,
@@ -208,6 +219,7 @@ export const CATALOG_PRODUCTS = [
     category: 'dining',
     categoryLabel: 'Dining Room',
     price: '৳165,000',
+    bgColor: '#760813',
     hook: 'Warm beige Italian stone matched with champagne velvet seating.',
     description: 'Sleek cream marble top on a sturdy timber pedestal base. Paired with 6 cushioned velvet chairs for refined dining comfort.',
     image: images.creamDining,
@@ -225,6 +237,7 @@ export const CATALOG_PRODUCTS = [
     category: 'dining',
     categoryLabel: 'Dining Room',
     price: '৳28,000',
+    bgColor: '#7a0714',
     hook: 'A single handcrafted accent chair to enrich any room corner.',
     description: 'Solid mahogany frame with gilded detail carving. Perfect as a standalone vanity seat, desk accent, or dining headpiece.',
     image: images.goldChair,
@@ -244,6 +257,7 @@ export const CATALOG_PRODUCTS = [
     category: 'office',
     categoryLabel: 'Office & Chairs',
     price: '৳48,000',
+    bgColor: '#6b0c11',
     hook: 'Chesterfield craftsmanship designed for executive home offices.',
     description: 'Hand-finished cognac leather with button tufting mounted on a solid wooden swivel base. Combines vintage elegance with modern ergonomics.',
     image: images.executiveChair,
@@ -261,6 +275,7 @@ export const CATALOG_PRODUCTS = [
     category: 'office',
     categoryLabel: 'Office & Chairs',
     price: '৳52,000',
+    bgColor: '#801218',
     hook: 'Highback director seat with mahogany armrests for video call presence.',
     description: 'Supple black leather with deep cushioned contouring and real wood accents. Provides full upper back and neck support throughout long work sessions.',
     image: images.blackLeatherChair,
@@ -278,6 +293,7 @@ export const CATALOG_PRODUCTS = [
     category: 'office',
     categoryLabel: 'Office & Chairs',
     price: '৳32,000',
+    bgColor: '#7a0d1a',
     hook: 'Engineered spinal support to eliminate fatigue during long WFH hours.',
     description: 'Breathable mesh backrest equipped with dynamic lumbar support and 4D adjustable armrests. Keeps you cool and posture-aligned all day.',
     image: images.meshChair,
@@ -295,6 +311,7 @@ export const CATALOG_PRODUCTS = [
     category: 'office',
     categoryLabel: 'Office & Chairs',
     price: '৳38,000',
+    bgColor: '#76070f',
     hook: 'Sleek dark walnut bentwood design for compact modern workspaces.',
     description: 'Curved walnut veneer shell with padded faux leather seat and back cushion. Delivers executive comfort in a space-saving footprint.',
     image: images.blackPaddedChair,
@@ -462,7 +479,10 @@ export default function ProductCatalog({
                   className={`${styles.productCard} ${isHovered ? styles.cardHovered : ''} ${isDimmed ? styles.cardDimmed : ''} ${isFocused ? styles.cardElevated : ''}`}
                 >
                   {/* Image Wrap */}
-                  <div className={`${styles.imageContainer} ${isFocused ? styles.brassSpotlight : ''}`}>
+                  <div
+                    className={`${styles.imageContainer} ${isFocused ? styles.brassSpotlight : ''}`}
+                    style={{ '--card-bg': item.bgColor || '#e4e5caff' }}
+                  >
                     <Image
                       src={item.image}
                       alt={`Heaven Furniture Mart — ${item.title}`}
@@ -544,7 +564,10 @@ export default function ProductCatalog({
               </button>
 
               <div className={styles.modalGrid}>
-                <div className={styles.modalImageWrap}>
+                <div
+                  className={styles.modalImageWrap}
+                  style={{ '--card-bg': quickViewItem.bgColor || '#b0030e' }}
+                >
                   <Image
                     src={quickViewItem.image}
                     alt={quickViewItem.title}
