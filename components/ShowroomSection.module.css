@@ -1,0 +1,403 @@
+/* ═══════════════════════════════════════════════════
+   SHOWROOM & CONTACT — one section, one ask
+   Every contact detail is stated exactly once.
+
+   Dark field matching the footer (#0D1B1E) so the page
+   closes in one continuous dark movement. The calling
+   card inverts to bone: on this background a dark card
+   would be invisible, and a shadow can't lift it.
+   ═══════════════════════════════════════════════════ */
+
+.showroom {
+  /* Explicit padding — do NOT add the global .section class here.
+     Both set padding at the same specificity, so the winner would
+     depend on CSS-module injection order. */
+  padding: var(--section-pad-y) var(--section-pad-x);
+  background: #0D1B1E;
+  color: var(--text-on-dark);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Testimonials above is also dark (#1A2B2F vs this #0D1B1E is only
+   1.20:1), so the boundary needs stating. A brass hairline plus a
+   short vertical gradient reads as this section stepping down into
+   shadow, rather than as an accidental seam. There is no matching
+   rule at the bottom — the merge into the footer is intentional. */
+.showroom::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 120px;
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(176, 141, 87, 0.5),
+      transparent
+    ) top / 100% 1px no-repeat,
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.28), transparent);
+  pointer-events: none;
+}
+
+/* Faint warmth behind the content so the dark field has depth
+   instead of reading as flat black. */
+.showroom::after {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  width: 900px;
+  height: 600px;
+  transform: translateX(-50%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(176, 141, 87, 0.09),
+    transparent 65%
+  );
+  pointer-events: none;
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Header ───────────────────────────────────────── */
+
+.header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.title {
+  margin-top: 12px;
+  font-size: clamp(2.2rem, 4.6vw, 3.4rem);
+  line-height: 1.1;
+  color: var(--text-on-dark);
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass-light);
+}
+
+.lede {
+  max-width: 520px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.75;
+  color: rgba(250, 247, 242, 0.62);
+}
+
+/* ── Layout ───────────────────────────────────────── */
+
+/* Equal columns, equal heights. The card's content sets the row
+   height and the map stretches to match it, so both objects share
+   an identical top and bottom edge. */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  align-items: stretch;
+}
+
+/* ── Map ──────────────────────────────────────────── */
+
+.mapCol {
+  position: relative;
+  display: flex;
+}
+
+.mapFrame {
+  position: relative;
+  width: 100%;
+  /* No aspect-ratio: the height comes from the grid row so the
+     map can never disagree with the card beside it. */
+  min-height: 420px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+.mapIframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  filter: saturate(0.85) contrast(1.02);
+}
+
+/* Inset hairline: keeps the live Google embed from reading as a
+   raw pasted rectangle, without covering any of its controls. */
+.mapRing {
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: var(--radius);
+  pointer-events: none;
+}
+
+/* ── Calling card (signature element) ─────────────── */
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 44px 40px 40px;
+  background: linear-gradient(160deg, #FAF7F2 0%, #EFE9DE 100%);
+  color: var(--text-primary);
+  border-radius: var(--radius);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* Two brass corner brackets — mounting corners on a framed print.
+   A partial frame, deliberately, rather than a full outline. */
+.card::before,
+.card::after {
+  content: '';
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--brass);
+  pointer-events: none;
+}
+
+.card::before {
+  top: 14px;
+  left: 14px;
+  border-right: none;
+  border-bottom: none;
+}
+
+.card::after {
+  right: 14px;
+  bottom: 14px;
+  border-left: none;
+  border-top: none;
+}
+
+/* Grouping wrapper for the hours and contact blocks */
+.block {
+  position: relative;
+}
+
+.blockTitle {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  /* Deepened from --brass-dark: on the bone card that token only
+     reaches 4.08:1, below the 4.5:1 floor for text this small. */
+  color: #6E5730;
+  margin-bottom: 18px;
+}
+
+/* ── Hours: a printed ledger, leader rule between ── */
+
+.hours {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hoursRow {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.hoursDay {
+  font-size: 14px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* The leader: fills whatever space is left between day and time */
+.hoursRow::after {
+  content: '';
+  order: 1;
+  flex: 1;
+  height: 1px;
+  background: rgba(176, 141, 87, 0.4);
+  transform: translateY(-3px);
+}
+
+.hoursTime {
+  order: 2;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.rule {
+  height: 1px;
+  margin: 30px 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(176, 141, 87, 0.5),
+    transparent
+  );
+}
+
+/* ── Contact list ─────────────────────────────────── */
+
+.contactList {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contactItem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 12px 10px 10px;
+  margin-left: -10px;
+  border-radius: var(--radius);
+  transition: background var(--duration) var(--ease-out);
+}
+
+.contactItem:hover {
+  background: rgba(176, 141, 87, 0.13);
+}
+
+.contactItem:focus-visible {
+  outline: 2px solid #6E5730;
+  outline-offset: 2px;
+}
+
+.contactIcon {
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  border-radius: 50%;
+  color: #6E5730;
+  transition: border-color var(--duration) var(--ease-out),
+              color var(--duration) var(--ease-out);
+}
+
+.contactItem:hover .contactIcon {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.contactText {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.contactLabel {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  /* --text-muted reaches only 3.59:1 on the bone card */
+  color: #6B5B4B;
+}
+
+.contactValue {
+  font-size: 14.5px;
+  color: var(--text-primary);
+  overflow-wrap: anywhere;
+}
+
+/* ── Actions ──────────────────────────────────────── */
+
+/* margin-top:auto pins the actions to the card's bottom edge, so
+   any extra column height is absorbed above them rather than
+   left as one dead gap at the end. */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 34px;
+}
+
+.actionBtn {
+  width: 100%;
+  padding: 15px 24px;
+}
+
+.actionsNote {
+  margin-top: 4px;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+  color: #6B5B4B;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  /* Stacked, equal heights are meaningless — the map takes an
+     explicit height again. The desktop stagger is dropped rather
+     than inverted into an overlap: the map's zoom controls and
+     Google attribution sit along its bottom edge and must stay
+     visible and clickable. */
+  .mapFrame {
+    min-height: 0;
+    aspect-ratio: 16 / 9;
+  }
+}
+
+@media (max-width: 640px) {
+  .header {
+    margin-bottom: 44px;
+  }
+
+  .layout {
+    gap: 24px;
+  }
+
+  .card {
+    padding: 36px 24px 32px;
+  }
+
+  .hoursDay {
+    font-size: 13px;
+  }
+
+  .hoursTime {
+    font-size: 16px;
+  }
+
+  .contactValue {
+    font-size: 14px;
+  }
+}
+
+/* ═══════════════════════════════════════════════════
+   REDUCED MOTION
+   ═══════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  .contactItem,
+  .contactIcon {
+    transition: none;
+  }
+}

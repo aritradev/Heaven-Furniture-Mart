@@ -1,0 +1,37 @@
+/* Layout-agnostic: fills whatever positioned box it is dropped into.
+   The tone matters now that no still image sits underneath — it is what
+   the card looks like in the moment before the first frame decodes. */
+.frame {
+  position: absolute;
+  inset: 0;
+  background: var(--deep-brown);
+}
+
+/* Opacity lives here rather than on the video element so a
+   caller-supplied class can own `transform` (hover zoom) without the
+   two transition declarations overwriting each other. */
+.veil {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 700ms var(--ease-out);
+  pointer-events: none;
+}
+
+.veilReady {
+  opacity: 1;
+}
+
+/* Element selector, so it applies regardless of caller class. */
+.veil video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .veil {
+    transition: none;
+  }
+}

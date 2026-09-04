@@ -1,0 +1,248 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  padding: 20px var(--section-pad-x);
+  transition: all 400ms var(--ease-out);
+  background: transparent;
+}
+
+.nav.scrolled {
+  background: rgba(250, 247, 242, 0.95);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px var(--section-pad-x);
+  box-shadow: 0 1px 20px rgba(44, 24, 16, 0.06);
+}
+
+.inner {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Logo */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  z-index: 101;
+}
+
+.logoMark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid var(--brass);
+  border-radius: 50%;
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--brass);
+  transition: all 400ms var(--ease-out);
+}
+
+.nav:not(.scrolled) .logoMark {
+  border-color: rgba(250, 247, 242, 0.4);
+  color: var(--text-on-dark);
+}
+
+.logoText {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transition: color 400ms var(--ease-out);
+}
+
+.nav:not(.scrolled) .logoText {
+  color: var(--text-on-dark);
+}
+
+.nav.scrolled .logoText {
+  color: var(--text-primary);
+}
+
+/* Nav Links */
+.links {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.link {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  transition: color 300ms var(--ease-out);
+  position: relative;
+}
+
+.nav:not(.scrolled) .link {
+  color: rgba(250, 247, 242, 0.8);
+}
+
+.nav.scrolled .link {
+  color: var(--text-secondary);
+}
+
+.link:hover {
+  color: var(--brass) !important;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--brass);
+  transition: width 300ms var(--ease-out);
+}
+
+.link:hover::after {
+  width: 100%;
+}
+
+/* Desktop CTAs */
+.ctaGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cta {
+  padding: 10px 24px !important;
+  font-size: 13px !important;
+}
+
+.whatsappBtn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 16px;
+  border-radius: 2px;
+  background: #25D366;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: background 0.3s ease, transform 0.3s ease;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.whatsappBtn:hover {
+  background: #1EA952;
+  transform: translateY(-1px);
+}
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 32px;
+  height: 32px;
+  z-index: 101;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 1.5px;
+  transition: all 300ms var(--ease-out);
+}
+
+.nav:not(.scrolled) .hamburger span {
+  background: var(--text-on-dark);
+}
+
+.nav.scrolled .hamburger span {
+  background: var(--text-primary);
+}
+
+.hamburger.open span:nth-child(1) {
+  transform: translateY(6.5px) rotate(45deg);
+  background: var(--text-primary) !important;
+}
+
+.hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open span:nth-child(3) {
+  transform: translateY(-6.5px) rotate(-45deg);
+  background: var(--text-primary) !important;
+}
+
+/* Mobile Menu */
+.mobileMenu {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--surface-light);
+  z-index: 99;
+  padding: 100px var(--section-pad-x) 40px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-out);
+}
+
+.mobileMenu.mobileOpen {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobileLinks {
+  list-style: none;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.mobileLink {
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--text-primary);
+  transition: color 300ms var(--ease-out);
+}
+
+.mobileLink:hover {
+  color: var(--brass);
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 900px) {
+  .links,
+  .ctaGroup {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .mobileMenu {
+    display: flex;
+  }
+}

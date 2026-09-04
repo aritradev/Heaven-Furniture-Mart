@@ -1,0 +1,656 @@
+.catalogSection {
+  background-color: var(--surface-cream, #F5F0E8);
+  color: var(--text-primary, #2C1810);
+  padding: 6rem 0;
+  position: relative;
+  border-top: 1px solid rgba(176, 141, 87, 0.2);
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerTitle {
+  font-family: var(--font-display, serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  color: var(--text-primary, #2C1810);
+  margin-top: 0.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 400;
+}
+
+.headerSub {
+  color: var(--text-secondary, #5C4A3A);
+  font-size: 1rem;
+  max-width: 620px;
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.filterBtn {
+  background: #FFFFFF;
+  border: 1px solid rgba(176, 141, 87, 0.3);
+  color: var(--text-secondary, #5C4A3A);
+  padding: 0.65rem 1.4rem;
+  border-radius: 30px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-body, sans-serif);
+  letter-spacing: 0.04em;
+  box-shadow: 0 2px 8px rgba(44, 24, 16, 0.04);
+}
+
+.filterBtn:hover {
+  background: rgba(176, 141, 87, 0.12);
+  color: var(--text-primary, #2C1810);
+  border-color: var(--brass, #B08D57);
+}
+
+.activeFilter {
+  background: var(--brass, #B08D57);
+  color: #FFFFFF;
+  border-color: var(--brass, #B08D57);
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(176, 141, 87, 0.35);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2.25rem;
+}
+
+.productCard {
+  background: #FFFFFF;
+  border: 1px solid rgba(176, 141, 87, 0.25);
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 4px 20px rgba(44, 24, 16, 0.06);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease,
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.4s ease,
+              filter 0.4s ease;
+  will-change: transform, box-shadow;
+  position: relative;
+  z-index: 1;
+}
+
+/* Smooth Lift Hover */
+.cardHovered {
+  transform: translateY(-8px);
+  border-color: var(--brass, #B08D57);
+  box-shadow: 0 16px 36px rgba(44, 24, 16, 0.12);
+  z-index: 10;
+}
+
+/* Sibling Dimming State */
+.cardDimmed {
+  opacity: 0.6;
+  filter: blur(0.4px) grayscale(10%);
+  transform: scale(0.96);
+}
+
+/* Brand Theme Elevated Focus Rise (0.2s Focus Mode) */
+.cardElevated {
+  z-index: 40 !important;
+  transform: translateY(-22px) scale(1.08) !important;
+  border-color: var(--brass, #B08D57) !important;
+  box-shadow: 0 32px 75px rgba(44, 24, 16, 0.24),
+              0 0 45px rgba(176, 141, 87, 0.4) !important;
+}
+
+.cardElevated .productImage {
+  transform: scale(1.14) !important;
+}
+
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  background: #800D1D;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.15);
+  transition: background 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Warm Brass/Gold Luxury Spotlight (Original Brand Theme) */
+.brassSpotlight {
+  background: radial-gradient(circle at center, rgba(201, 169, 110, 0.35) 0%, #800D1D 100%) !important;
+}
+
+
+.productImage {
+  object-fit: contain;
+  padding: 0.75rem;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.productCard:hover .productImage {
+  transform: scale(1.08);
+}
+
+.categoryBadge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--surface-dark, #1A2B2F);
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  color: var(--brass-light, #C9A96E);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border-radius: 3px;
+  backdrop-filter: blur(4px);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.priceTag {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  background: var(--brass, #B08D57);
+  color: #FFFFFF;
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 0.35rem 0.75rem;
+  border-radius: 4px;
+  box-shadow: 0 4px 14px rgba(44, 24, 16, 0.2);
+  letter-spacing: 0.02em;
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: #FFFFFF;
+}
+
+.productTitle {
+  font-family: var(--font-display, serif);
+  font-size: 1.35rem;
+  font-weight: 500;
+  color: var(--text-primary, #2C1810);
+  margin-bottom: 0.4rem;
+  line-height: 1.3;
+}
+
+.productDesc {
+  font-size: 0.85rem;
+  color: var(--text-secondary, #5C4A3A);
+  line-height: 1.55;
+  margin-bottom: 0.85rem;
+}
+
+.specList {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.25rem 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  flex: 1;
+}
+
+.specList li {
+  font-size: 0.79rem;
+  color: var(--text-secondary, #5C4A3A);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  line-height: 1.45;
+}
+
+.specDot {
+  color: var(--brass, #B08D57);
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+/* Three actions no longer fit on one line at card width, so they sit on two
+   rows: the two ways of looking at the piece side by side, and the one way of
+   buying it spanning underneath. */
+.cardActions {
+  margin-top: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+}
+
+.quickViewBtn {
+  background: var(--surface-cream, #F5F0E8);
+  border: 1px solid rgba(176, 141, 87, 0.3);
+  color: var(--text-primary, #2C1810);
+  padding: 0.7rem 0.6rem;
+  border-radius: var(--radius, 4px);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.03em;
+}
+
+.quickViewBtn:hover {
+  background: rgba(176, 141, 87, 0.15);
+  border-color: var(--brass, #B08D57);
+  color: var(--text-primary, #2C1810);
+}
+
+/* Deliberately outlined in brass rather than filled: it should read as the
+   more interesting of the two view options without competing with the
+   WhatsApp button, which is still the one that closes the sale. */
+.roomPreviewBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  background: rgba(176, 141, 87, 0.09);
+  border: 1px solid var(--brass, #B08D57);
+  color: var(--brass-dark, #8C6F3F);
+  padding: 0.7rem 0.6rem;
+  border-radius: var(--radius, 4px);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.roomPreviewBtn:hover {
+  background: var(--deep-brown, #2C1810);
+  border-color: var(--deep-brown, #2C1810);
+  color: var(--surface-cream, #F5F0E8);
+}
+
+.orderWhatsappBtn {
+  grid-column: 1 / -1;
+  background: var(--brass, #B08D57);
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 0.7rem 1.1rem;
+  border-radius: var(--radius, 4px);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 16px rgba(176, 141, 87, 0.25);
+  transition: all 0.25s ease;
+  white-space: nowrap;
+}
+
+.orderWhatsappBtn:hover {
+  background: var(--brass-dark, #8C6F3F);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(176, 141, 87, 0.4);
+}
+
+/* Modal */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(44, 24, 16, 0.75);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem;
+  animation: fadeIn 0.25s ease-out;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modalContent {
+  position: relative;
+  background: var(--surface-light, #FAF7F2);
+  border: 1px solid var(--brass, #B08D57);
+  border-radius: 12px;
+  max-width: 880px;
+  width: 100%;
+  max-height: min(650px, calc(90vh - 2rem));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 60px rgba(44, 24, 16, 0.35);
+}
+
+.modalCloseBtn {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 50;
+  background: rgba(44, 24, 16, 0.25);
+  color: #FFFFFF;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.modalCloseBtn:hover {
+  background: var(--brass, #B08D57);
+  border-color: var(--brass, #B08D57);
+  color: #FFFFFF;
+  transform: scale(1.05);
+}
+
+.modalGrid {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .modalContent {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modalGrid {
+    grid-template-columns: 1fr;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+.modalImageWrap {
+  position: relative;
+  height: 100%;
+  min-height: 350px;
+  background: #800D1D;
+  border-right: 1px solid rgba(176, 141, 87, 0.2);
+}
+
+@media (max-width: 768px) {
+  .modalImageWrap {
+    height: 240px;
+    min-height: 240px;
+    border-right: none;
+    border-bottom: 1px solid rgba(176, 141, 87, 0.2);
+  }
+}
+
+.modalImage {
+  object-fit: contain;
+  padding: 1.5rem;
+}
+
+.modalInfo {
+  padding: 2rem 2.25rem;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  max-height: 100%;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modalInfo::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalInfo::-webkit-scrollbar-track {
+  background: rgba(176, 141, 87, 0.08);
+}
+
+.modalInfo::-webkit-scrollbar-thumb {
+  background: rgba(176, 141, 87, 0.4);
+  border-radius: 3px;
+}
+
+.modalInfo::-webkit-scrollbar-thumb:hover {
+  background: var(--brass, #B08D57);
+}
+
+.modalBadge {
+  align-self: flex-start;
+  background: var(--surface-dark, #1A2B2F);
+  color: var(--brass-light, #C9A96E);
+  border: 1px solid rgba(176, 141, 87, 0.4);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+
+.modalTitle {
+  font-family: var(--font-display, serif);
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--text-primary, #2C1810);
+  margin-bottom: 0.35rem;
+}
+
+.modalPrice {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--brass, #B08D57);
+  margin-bottom: 1rem;
+}
+
+.modalDesc {
+  font-size: 0.88rem;
+  color: var(--text-secondary, #5C4A3A);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.modalSpecsGroup {
+  margin-bottom: 1.75rem;
+}
+
+.modalSpecsGroup h4 {
+  font-family: var(--font-body, sans-serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary, #2C1810);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modalSpecsGroup ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.modalSpecsGroup li {
+  font-size: 0.82rem;
+  color: var(--text-muted, #8A7A6A);
+}
+
+.modalCtaRow {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Above the WhatsApp button, because seeing it in the room is what a
+   hesitating customer needs before they are ready to ask the price. */
+.modalSecondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  background: transparent;
+  border: 1px solid var(--brass, #B08D57);
+  color: var(--brass-dark, #8C6F3F);
+  padding: 0.85rem 1.25rem;
+  border-radius: var(--radius, 4px);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.modalSecondaryBtn:hover {
+  background: var(--deep-brown, #2C1810);
+  border-color: var(--deep-brown, #2C1810);
+  color: var(--surface-cream, #F5F0E8);
+}
+
+.modalPrimaryBtn {
+  display: block;
+  background: var(--brass, #B08D57);
+  color: #FFFFFF;
+  text-decoration: none;
+  padding: 0.9rem 1.25rem;
+  border-radius: var(--radius, 4px);
+  font-weight: 600;
+  text-align: center;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 18px rgba(176, 141, 87, 0.35);
+  transition: all 0.25s ease;
+}
+
+.modalPrimaryBtn:hover {
+  background: var(--brass-dark, #8C6F3F);
+  box-shadow: 0 6px 24px rgba(176, 141, 87, 0.5);
+}
+
+/* --- Conversion Copy & Trust Bar Enhancements --- */
+.trustBar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 1.75rem;
+  padding: 0.85rem 1.5rem;
+  background: rgba(176, 141, 87, 0.08);
+  border: 1px dashed rgba(176, 141, 87, 0.35);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--text-primary, #2C1810);
+}
+
+.trustItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+
+.trustIcon {
+  font-size: 1rem;
+}
+
+.productHook {
+  font-family: var(--font-display, serif);
+  font-style: italic;
+  font-size: 0.88rem;
+  color: var(--brass-dark, #8C6F3F);
+  margin-bottom: 0.65rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.dimensionsBadge {
+  font-size: 0.77rem;
+  color: var(--text-secondary, #5C4A3A);
+  background: var(--surface-cream, #F5F0E8);
+  border: 1px solid rgba(176, 141, 87, 0.22);
+  padding: 0.35rem 0.7rem;
+  border-radius: 6px;
+  margin-bottom: 0.85rem;
+  display: block;
+  letter-spacing: 0.02em;
+  width: 100%;
+}
+
+.dimLabel {
+  font-weight: 600;
+  color: var(--brass-dark, #8C6F3F);
+}
+
+.dailyMathTag {
+  font-size: 0.78rem;
+  color: var(--brass-dark, #6A5029);
+  background: rgba(176, 141, 87, 0.12);
+  border: 1px solid rgba(176, 141, 87, 0.28);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  display: flex;
+  align-items: center;
+}
+
+.mathIcon {
+  font-size: 0.85rem;
+}
+
+.modalHook {
+  font-family: var(--font-display, serif);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--brass-dark, #8C6F3F);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.modalDailyMath {
+  font-size: 0.85rem;
+  background: rgba(176, 141, 87, 0.12);
+  border: 1px solid rgba(176, 141, 87, 0.3);
+  color: var(--text-primary, #2C1810);
+  padding: 0.45rem 0.75rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.modalDimensions {
+  font-size: 0.82rem;
+  color: var(--text-secondary, #5C4A3A);
+  margin-bottom: 1rem;
+  background: #FFFFFF;
+  padding: 0.4rem 0.7rem;
+  border-radius: 4px;
+  border: 1px solid rgba(176, 141, 87, 0.2);
+}
+
+.replyGuaranteeNote {
+  font-size: 0.78rem;
+  color: var(--text-muted, #8A7A6A);
+  margin-bottom: 0.85rem;
+  text-align: center;
+}

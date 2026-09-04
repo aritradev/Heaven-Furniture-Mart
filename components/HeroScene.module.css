@@ -1,0 +1,229 @@
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  padding-bottom: 60px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0D1B1E 0%, #1A2B2F 40%, #1E2D31 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Three.js Canvas */
+.canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+/* Text Overlay */
+.overlay {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  padding: 100px var(--section-pad-x) 40px;
+}
+
+.content {
+  text-align: center;
+  max-width: 860px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.25em;
+  color: var(--brass);
+  margin-bottom: 24px;
+  text-transform: uppercase;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(3rem, 6.5vw, 5.2rem);
+  font-weight: 400;
+  line-height: 1.08;
+  color: var(--text-on-dark);
+  margin-bottom: 24px;
+  letter-spacing: -0.02em;
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass-light);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: clamp(16px, 1.8vw, 19px);
+  font-weight: 300;
+  line-height: 1.7;
+  color: var(--text-on-dark-muted);
+  max-width: 560px;
+  margin: 0 auto 36px;
+}
+
+.ctas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+/* ── Integrated Hero Stats Bar ── */
+.heroStatsContainer {
+  width: 100%;
+  max-width: 840px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(176, 141, 87, 0.22);
+  border-radius: 4px;
+  padding: 20px 24px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
+}
+
+.heroStatsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  align-items: center;
+}
+
+.heroStatItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.heroStatItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  right: -8px;
+  top: 15%;
+  height: 70%;
+  width: 1px;
+  background: rgba(176, 141, 87, 0.2);
+}
+
+.heroStatNum {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-weight: 300;
+  color: var(--brass-light);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.heroStatLabel {
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 242, 0.6);
+  margin-top: 4px;
+}
+
+/* Scroll Indicator */
+.scrollIndicator {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.scrollLine {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(to bottom, var(--brass), transparent);
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+.scrollIndicator span {
+  font-family: var(--font-body);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  color: var(--text-on-dark-muted);
+}
+
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* ─── Mobile ─── */
+@media (max-width: 768px) {
+  .hero {
+    min-height: 100svh;
+    padding-bottom: 30px;
+  }
+
+  .overlay {
+    padding-top: 90px;
+    padding-bottom: 20px;
+  }
+
+  .title {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+  }
+
+  .subtitle {
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  .ctas {
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+    width: 100%;
+  }
+
+  .ctas .btn {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .heroStatsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px 8px;
+  }
+
+  .heroStatItem:not(:last-child)::after {
+    display: none;
+  }
+
+  .heroStatNum {
+    font-size: 1.8rem;
+  }
+
+  .heroStatLabel {
+    font-size: 10px;
+  }
+
+  .scrollIndicator {
+    display: none;
+  }
+}

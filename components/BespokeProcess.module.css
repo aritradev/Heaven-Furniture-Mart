@@ -1,0 +1,288 @@
+/* ── Section wrapper ── */
+.section {
+  background: var(--surface-cream);
+}
+
+/* ══════════════════════════════════════════════════════════════
+   BLOCK 1 — Bespoke Hero
+══════════════════════════════════════════════════════════════ */
+.heroBlock {
+  padding: 120px var(--section-pad-x) 100px;
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+/* Image column */
+.imageCol {
+  position: relative;
+}
+
+.imageMain {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: 0 24px 64px rgba(44, 24, 16, 0.16);
+}
+
+/* Portrait, not square. The loop inside it is a 9:16 vertical clip of
+   a tall cabinet, and a 1:1 crop would cut the head and foot off the
+   piece. 3:4 keeps the subject whole and reads as a deliberate
+   portrait card next to the 4:5 image behind it. */
+.imageAccent {
+  position: absolute;
+  bottom: -28px;
+  right: -28px;
+  width: 40%;
+  aspect-ratio: 3 / 4;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 4px solid var(--surface-cream);
+  box-shadow: 0 12px 32px rgba(44, 24, 16, 0.18);
+}
+
+.img {
+  object-fit: cover;
+  transition: transform 0.7s ease;
+}
+
+.imageMain:hover .img,
+.imageAccent:hover .img {
+  transform: scale(1.04);
+}
+
+/* Text column */
+.textCol {
+  padding-top: 24px;
+}
+
+.heroTitle {
+  margin-top: 16px;
+  margin-bottom: 20px;
+  font-size: clamp(2.2rem, 4vw, 3.2rem);
+  line-height: 1.15;
+}
+
+.heroDesc {
+  font-size: 16px;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  font-weight: 300;
+  margin-bottom: 32px;
+}
+
+/* Trust bullets grid */
+.trustGrid {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 20px;
+  margin-bottom: 36px;
+}
+
+.trustItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.trustIcon {
+  color: var(--brass);
+  font-size: 10px;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* CTAs */
+.heroCtas {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ghostBtn {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  color: var(--brass);
+  text-decoration: none;
+  transition: opacity 0.25s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ghostBtn:hover { opacity: 0.7; }
+
+/* ══════════════════════════════════════════════════════════════
+   BLOCK 2 — Process Steps
+══════════════════════════════════════════════════════════════ */
+.processBlock {
+  background: linear-gradient(135deg, #1A2B2F 0%, #0D1B1E 100%);
+  padding: 100px var(--section-pad-x);
+  border-top: 1px solid rgba(176, 141, 87, 0.15);
+}
+
+.processHeader {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.processTitle {
+  color: var(--text-on-dark);
+  margin-top: 14px;
+}
+
+.processSub {
+  margin-top: 12px;
+  font-size: 15px;
+  color: rgba(250, 247, 242, 0.5);
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Steps 4-column grid */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+}
+
+.stepCard {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 36px 20px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(176, 141, 87, 0.15);
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.stepCard:not(:last-child) {
+  border-right: none;
+}
+
+.stepCard:hover {
+  background: rgba(176, 141, 87, 0.06);
+  border-color: rgba(176, 141, 87, 0.4);
+  z-index: 1;
+}
+
+.stepNumBadge {
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--brass);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.04em;
+}
+
+.stepIcon {
+  color: var(--brass-light);
+  margin-top: 14px;
+  margin-bottom: 14px;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: var(--text-on-dark);
+  margin-bottom: 10px;
+}
+
+.stepDesc {
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(250, 247, 242, 0.55);
+  flex: 1;
+}
+
+.stepTime {
+  margin-top: 16px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass);
+  background: rgba(176, 141, 87, 0.1);
+  border: 1px solid rgba(176, 141, 87, 0.2);
+  padding: 4px 10px;
+  border-radius: 2px;
+}
+
+.stepArrow {
+  position: absolute;
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--brass);
+  font-size: 16px;
+  z-index: 2;
+  background: #152227;
+  padding: 2px 4px;
+  line-height: 1;
+}
+
+/* Bottom nudge bar */
+.processNudge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 52px;
+  flex-wrap: wrap;
+}
+
+.processNudge span {
+  font-size: 14px;
+  color: rgba(250, 247, 242, 0.45);
+  font-style: italic;
+  font-family: var(--font-display);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+  .imageAccent { right: -12px; bottom: -12px; }
+  .stepsGrid { grid-template-columns: repeat(2, 1fr); }
+  .stepCard:not(:last-child) { border-right: 1px solid rgba(176, 141, 87, 0.15); }
+  .stepArrow { display: none; }
+}
+
+@media (max-width: 600px) {
+  .heroBlock { padding: 72px var(--section-pad-x) 64px; }
+  .processBlock { padding: 72px var(--section-pad-x); }
+  /* 40% of a phone-width column leaves a ~134px frame — too small to
+     read a video in. Widen it so the loop is actually watchable. */
+  .imageAccent { width: 48%; }
+  .stepsGrid { grid-template-columns: 1fr; }
+  .trustGrid { grid-template-columns: 1fr; }
+  .heroCtas { flex-direction: column; align-items: flex-start; }
+}

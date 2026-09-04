@@ -1,0 +1,688 @@
+/* ── Room Preview ──────────────────────────────────────────────
+   A pseudo-3D room built from two flat planes and a trim line. No WebGL:
+   the product is a 2D cutout, so a real 3D pipeline would add weight
+   without adding truth. What sells the depth is the horizon, the gradients
+   that fall away from it, and the shadow that ties the piece to the floor.
+
+   One structural rule runs through this file: nothing between a shadow and
+   the floor may carry `transform`, `filter` or `opacity`. Any of those opens
+   a stacking context, and `mix-blend-mode: multiply` would then blend
+   against that context's transparent black instead of the floor tone. The
+   product is centred with flexbox for exactly this reason — never
+   `translateX(-50%)`. */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  overflow-y: auto;
+  background: rgba(28, 16, 10, 0.74);
+  backdrop-filter: blur(10px);
+  animation: rpFade 220ms ease-out;
+}
+
+.panel {
+  position: relative;
+  width: 100%;
+  max-width: 1140px;
+  max-height: 92vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-light, #FAF7F2);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px rgba(28, 16, 10, 0.45);
+  animation: rpRise 320ms cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem 1.4rem 0.95rem;
+  border-bottom: 1px solid rgba(176, 141, 87, 0.22);
+}
+
+.eyebrow {
+  display: block;
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass, #B08D57);
+  margin-bottom: 0.3rem;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display, Georgia, serif);
+  font-size: 1.32rem;
+  font-weight: 600;
+  color: var(--text-primary, #2C1810);
+  line-height: 1.25;
+}
+
+.close {
+  flex-shrink: 0;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(176, 141, 87, 0.3);
+  border-radius: 50%;
+  background: var(--surface-cream, #F5F0E8);
+  color: var(--text-primary, #2C1810);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.close:hover {
+  background: var(--brass, #B08D57);
+  color: #FFFFFF;
+  transform: rotate(90deg);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 336px;
+  overflow: hidden;
+}
+
+/* ── the room ─────────────────────────────────────────────── */
+
+.stageWrap {
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  min-width: 0;
+}
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 8px;
+  overflow: hidden;
+  /* Confines every blend inside this box — the shadows must reach the floor,
+     but must not multiply against the page behind the modal. The filter is
+     the lighting preset's exposure, applied to the finished composite. */
+  isolation: isolate;
+  filter: brightness(var(--brightness)) saturate(var(--saturate));
+  box-shadow: inset 0 0 0 1px rgba(28, 16, 10, 0.12);
+  transition: filter 420ms ease;
+}
+
+/* Upper 72%. Two gradients: side falloff standing in for the corners where
+   adjoining walls turn away from the light, and a vertical wash that is
+   brightest near the ceiling and pools darker down at the skirting. */
+.wall {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 28%;
+  background-color: var(--wall);
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.13) 0%,
+      rgba(0, 0, 0, 0.05) 9%,
+      rgba(0, 0, 0, 0) 26%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(0, 0, 0, 0) 74%,
+      rgba(0, 0, 0, 0.05) 91%,
+      rgba(0, 0, 0, 0.13) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.11) 0%,
+      rgba(255, 255, 255, 0.03) 26%,
+      rgba(0, 0, 0, 0) 56%,
+      rgba(0, 0, 0, 0.06) 84%,
+      rgba(0, 0, 0, 0.15) 100%
+    );
+  transition: background-color 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The horizon. Without a trim line the two planes read as a flat two-tone
+   rectangle; with one, the eye accepts a wall meeting a floor. Its drop
+   shadow is what puts the wall behind the floor rather than beside it. */
+.baseboard {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 28%;
+  height: clamp(9px, 2.4%, 22px);
+  background-image: linear-gradient(
+    180deg,
+    var(--trim) 0%,
+    var(--trim) 58%,
+    var(--trim-shade) 100%
+  );
+  border-top: 1px solid rgba(255, 255, 255, 0.34);
+  /* The hairline and the drop are what survive when wall and floor are close
+     in tone — a white tile floor under an alabaster wall would otherwise
+     have no visible horizon at all. */
+  border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0 4px 9px rgba(0, 0, 0, 0.26);
+  transition: background-image 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Lower 28%. Dark at the far edge, lifting towards the viewer — the cue that
+   reads as recession — with a pool of bounced light straight ahead. */
+.floor {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28%;
+  background-color: var(--floor);
+  background-image:
+    radial-gradient(
+      120% 92% at 50% 100%,
+      rgba(255, 255, 255, 0.14) 0%,
+      rgba(255, 255, 255, 0) 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.34) 0%,
+      rgba(0, 0, 0, 0.08) 30%,
+      rgba(0, 0, 0, 0) 64%,
+      rgba(255, 255, 255, 0.09) 100%
+    );
+  transition: background-color 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Where the piece stands. The height comes from the component, which works it
+   out from the cutout's own contact spread: a setting photographed in
+   perspective needs more floor than a single chair, and standing its nearest
+   foot at a fixed height would leave the rest of it up on the wall. Flexbox
+   centring only — see the note at the top of this file. */
+.productRow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: var(--stand, 20%);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transition: bottom 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* The box wraps the cutout exactly — height from the room type, width from
+   the cutout's own aspect — so it doubles as the shadow's footprint. The
+   height arrives already expressed as a share of this row. */
+.product {
+  position: relative;
+  height: var(--product-h);
+  aspect-ratio: var(--aspect);
+  max-width: var(--product-w);
+  transition: height 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* Bottom-anchored, so a cutout clamped by max-width still stands on the
+     floor instead of hovering in a letterboxed gap. */
+  object-fit: contain;
+  object-position: bottom center;
+  animation: rpSettle 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Tier 1 — diffuse ambient occlusion. Broad, soft, low density: the shadow
+   the whole room casts. Its geometry comes from the lighting preset, because
+   that is what actually sells the light: a low sun throws it long and to one
+   side, an overhead sun keeps it short. The contact depth stretches it back
+   under the rear of the set, since the whole footprint occludes the floor, not
+   just the front edge of it. */
+.shadowDiffuse {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: calc(102% * var(--sh-spread));
+  height: calc(13% * (0.6 + var(--sh-drop)) + var(--contact-depth, 0) * 100%);
+  transform: translate(-50%, 42%) skewX(var(--sh-skew));
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(var(--shadow-rgb), var(--sh-density)) 0%,
+    rgba(var(--shadow-rgb), 0) 70%
+  );
+  filter: blur(var(--sh-blur));
+  /* Multiply, so the shadow darkens the floor's own tone instead of laying
+     grey over it — on teak it goes brown, on marble it goes cool. */
+  mix-blend-mode: multiply;
+  transition: width 420ms ease, height 420ms ease, filter 420ms ease,
+    transform 420ms ease;
+  pointer-events: none;
+}
+
+/* Tier 2 — contact shadow. Tight, dense, barely blurred, directly under the
+   legs. This is the one that removes the floating artifact: ambient occlusion
+   alone still reads as a sticker, because real contact is dark and sharp. */
+.shadowContact {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 70%;
+  height: 4.2%;
+  transform: translate(-50%, 38%);
+  background-image: radial-gradient(
+    50% 50% at 50% 50%,
+    rgba(var(--shadow-rgb), calc(var(--sh-density) + 0.34)) 0%,
+    rgba(var(--shadow-rgb), 0) 74%
+  );
+  filter: blur(3px);
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+
+/* The lighting pass. Non-destructive and global: it sits above the room and
+   the product alike, so the piece is lit by the same source as the wall it
+   stands against. Nothing underneath is recoloured. */
+.lightLayer {
+  position: absolute;
+  inset: 0;
+  background-color: var(--tint);
+  mix-blend-mode: var(--tint-blend);
+  pointer-events: none;
+}
+
+.vignette {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    124% 100% at 50% 42%,
+    rgba(0, 0, 0, 0) 46%,
+    rgba(0, 0, 0, var(--vignette)) 100%
+  );
+  pointer-events: none;
+}
+
+.stageMsg {
+  position: absolute;
+  inset: auto 12% 12%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  background: rgba(28, 16, 10, 0.78);
+  color: var(--surface-cream, #F5F0E8);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.spinner {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(245, 240, 232, 0.3);
+  border-top-color: var(--brass, #B08D57);
+  border-radius: 50%;
+  animation: rpSpin 700ms linear infinite;
+}
+
+.caveat {
+  margin: 0;
+  font-size: 0.71rem;
+  line-height: 1.5;
+  color: var(--text-muted, #7A6A5C);
+}
+
+/* ── controls ─────────────────────────────────────────────── */
+
+.rail {
+  border-left: 1px solid rgba(176, 141, 87, 0.22);
+  background: var(--surface-cream, #F5F0E8);
+  padding: 1.15rem 1.25rem 1.25rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.groupTitle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 0.7rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--text-muted, #7A6A5C);
+  font-weight: 600;
+}
+
+.chip {
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-size: 0.66rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  font-weight: 600;
+  border: 1px solid rgba(28, 16, 10, 0.14);
+  transition: background 380ms ease, color 380ms ease;
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(30px, 1fr));
+  gap: 0.4rem;
+}
+
+.swatch {
+  aspect-ratio: 1;
+  border: 1px solid rgba(28, 16, 10, 0.16);
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.swatch:hover {
+  transform: translateY(-2px);
+}
+
+.swatchOn {
+  /* Ring drawn in the rail's own colour first, so the brass reads as a
+     halo rather than a thick border that shifts the swatch's size. */
+  box-shadow: 0 0 0 2px var(--surface-cream, #F5F0E8),
+    0 0 0 3.5px var(--brass, #B08D57);
+}
+
+.pickRow {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pickLabel,
+.pickBtn,
+.upload {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 0.7rem;
+  border: 1px solid rgba(176, 141, 87, 0.34);
+  border-radius: var(--radius, 4px);
+  background: #FFFFFF;
+  color: var(--text-primary, #2C1810);
+  font-size: 0.74rem;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease;
+}
+
+.pickLabel:hover,
+.pickBtn:hover,
+.upload:hover {
+  border-color: var(--brass, #B08D57);
+  background: #FFFDF9;
+}
+
+.pickRow > * {
+  flex: 1;
+  justify-content: center;
+}
+
+.pickLabel input[type='color'] {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.upload input[type='file'] {
+  display: none;
+}
+
+.photoBox {
+  width: 100%;
+  height: 128px;
+  padding: 0;
+  border: 1px solid rgba(176, 141, 87, 0.34);
+  border-radius: var(--radius, 4px);
+  background: var(--deep-brown, #2C1810);
+  overflow: hidden;
+  cursor: crosshair;
+}
+
+.photoBox img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.note,
+.privacy {
+  margin: 0;
+  font-size: 0.7rem;
+  line-height: 1.5;
+}
+
+.note {
+  color: var(--brass-dark, #8C6F3F);
+}
+
+.privacy {
+  color: var(--text-muted, #7A6A5C);
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.42rem 0.7rem;
+  border: 1px solid rgba(176, 141, 87, 0.3);
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: var(--text-primary, #2C1810);
+  font-size: 0.73rem;
+  cursor: pointer;
+  transition: border-color 200ms ease, background 200ms ease, color 200ms ease;
+}
+
+.pill:hover {
+  border-color: var(--brass, #B08D57);
+}
+
+.pillOn {
+  background: var(--deep-brown, #2C1810);
+  border-color: var(--deep-brown, #2C1810);
+  color: var(--surface-cream, #F5F0E8);
+}
+
+.pillDot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 0 1px rgba(28, 16, 10, 0.2);
+}
+
+.kelvin {
+  font-style: normal;
+  font-size: 0.63rem;
+  opacity: 0.6;
+  letter-spacing: 0.04em;
+}
+
+.actions {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 0.4rem;
+}
+
+.primaryBtn,
+.secondaryBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.78rem 1rem;
+  border-radius: var(--radius, 4px);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 220ms ease, transform 220ms ease, opacity 220ms ease;
+}
+
+.primaryBtn {
+  background: var(--brass, #B08D57);
+  border: 1px solid var(--brass, #B08D57);
+  color: #FFFFFF;
+}
+
+.primaryBtn:hover {
+  background: var(--brass-dark, #8C6F3F);
+  border-color: var(--brass-dark, #8C6F3F);
+  transform: translateY(-1px);
+}
+
+.secondaryBtn {
+  background: transparent;
+  border: 1px solid rgba(176, 141, 87, 0.45);
+  color: var(--text-primary, #2C1810);
+}
+
+.secondaryBtn:hover:not(:disabled) {
+  background: #FFFFFF;
+  border-color: var(--brass, #B08D57);
+}
+
+.secondaryBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* Keyboard focus stays visible on every control in here. */
+.close:focus-visible,
+.swatch:focus-visible,
+.pill:focus-visible,
+.pickBtn:focus-visible,
+.pickLabel:focus-visible,
+.upload:focus-visible,
+.photoBox:focus-visible,
+.primaryBtn:focus-visible,
+.secondaryBtn:focus-visible {
+  outline: 2px solid var(--brass, #B08D57);
+  outline-offset: 2px;
+}
+
+/* ── responsive ───────────────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .backdrop {
+    padding: 0;
+    align-items: flex-start;
+  }
+
+  .panel {
+    max-width: none;
+    max-height: none;
+    min-height: 100vh;
+    border-radius: 0;
+  }
+
+  .body {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+
+  .stage {
+    /* Taller on a phone, so the 72/28 split still leaves the floor room to
+       read as a floor rather than a stripe. */
+    aspect-ratio: 4 / 3;
+  }
+
+  .rail {
+    border-left: none;
+    border-top: 1px solid rgba(176, 141, 87, 0.22);
+    overflow: visible;
+  }
+}
+
+/* ── motion ───────────────────────────────────────────────── */
+
+@keyframes rpFade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes rpRise {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to { opacity: 1; transform: none; }
+}
+
+/* The piece arrives standing, not falling — a short settle, no bounce. */
+@keyframes rpSettle {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes rpSpin {
+  to { transform: rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .backdrop,
+  .panel,
+  .product img {
+    animation: none;
+  }
+
+  .stage,
+  .wall,
+  .floor,
+  .baseboard,
+  .productRow,
+  .product,
+  .shadowDiffuse,
+  .chip {
+    transition: none;
+  }
+
+  .close:hover,
+  .swatch:hover,
+  .primaryBtn:hover {
+    transform: none;
+  }
+}

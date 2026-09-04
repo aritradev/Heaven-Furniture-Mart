@@ -1,0 +1,260 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+/* ═══════════════════════════════════════════════════
+   DESIGN SYSTEM — Heaven Furniture Mart
+   ═══════════════════════════════════════════════════ */
+
+:root {
+  /* Surfaces */
+  --surface-light: #FAF7F2;
+  --surface-dark: #1A2B2F;
+  --surface-cream: #F5F0E8;
+
+  /* Brand Colors */
+  --brass: #B08D57;
+  --brass-light: #C9A96E;
+  --brass-dark: #8C6F3F;
+  --deep-brown: #2C1810;
+  --wood-tan: #C4A882;
+  --red-accent: #8B1A1A;
+
+  /* Text */
+  --text-primary: #2C1810;
+  --text-secondary: #5C4A3A;
+  --text-muted: #8A7A6A;
+  --text-on-dark: #FAF7F2;
+  --text-on-dark-muted: rgba(250, 247, 242, 0.6);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', Georgia, 'Times New Roman', serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+  /* Spacing */
+  --section-pad-y: 120px;
+  --section-pad-x: max(24px, 5vw);
+  --content-max: 1200px;
+  --content-narrow: 700px;
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration: 600ms;
+  --duration-slow: 800ms;
+
+  /* Misc */
+  --divider: 1px solid rgba(176, 141, 87, 0.3);
+  --divider-strong: 1px solid rgba(176, 141, 87, 0.6);
+  --shadow-card: 0 4px 24px rgba(44, 24, 16, 0.08);
+  --shadow-card-hover: 0 12px 40px rgba(44, 24, 16, 0.14);
+  --radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════
+   RESET & BASE
+   ═══════════════════════════════════════════════════ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background-color: var(--surface-light);
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: var(--font-body);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ═══════════════════════════════════════════════════
+   TYPOGRAPHY
+   ═══════════════════════════════════════════════════ */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+h1 { font-size: clamp(2.8rem, 6vw, 5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
+h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+
+.micro-label {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.serif-italic {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════════════
+   LAYOUT UTILITIES
+   ═══════════════════════════════════════════════════ */
+
+.section {
+  padding: var(--section-pad-y) var(--section-pad-x);
+}
+
+.section-dark {
+  background-color: var(--surface-dark);
+  color: var(--text-on-dark);
+}
+
+.section-dark h2,
+.section-dark h3,
+.section-dark h4 {
+  color: var(--text-on-dark);
+}
+
+.container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.container-narrow {
+  max-width: var(--content-narrow);
+  margin: 0 auto;
+  width: 100%;
+}
+
+.gold-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--brass);
+  margin: 24px auto;
+}
+
+.gold-divider-wide {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass), transparent);
+  margin: 40px 0;
+}
+
+/* ═══════════════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════════════ */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 16px 36px;
+  border-radius: var(--radius);
+  transition: all var(--duration) var(--ease-out);
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--brass);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: var(--brass-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(176, 141, 87, 0.3);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--text-on-dark);
+  border: 1px solid rgba(250, 247, 242, 0.4);
+}
+
+.btn-outline:hover {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.btn-outline-dark {
+  background: transparent;
+  color: var(--text-primary);
+  border: 1px solid rgba(44, 24, 16, 0.2);
+}
+
+.btn-outline-dark:hover {
+  border-color: var(--brass);
+  color: var(--brass);
+}
+
+.btn-whatsapp {
+  background: #25D366;
+  color: #fff;
+}
+
+.btn-whatsapp:hover {
+  background: #1EA952;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.3);
+}
+
+/* ═══════════════════════════════════════════════════
+   SCROLL REVEAL ANIMATION BASE
+   ═══════════════════════════════════════════════════ */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform var(--duration-slow) var(--ease-out);
+}
+
+/* ═══════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════ */
+
+@media (max-width: 768px) {
+  :root {
+    --section-pad-y: 64px;
+    --section-pad-x: 20px;
+  }
+}
