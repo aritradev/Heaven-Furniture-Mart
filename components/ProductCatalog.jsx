@@ -498,7 +498,6 @@ export default function ProductCatalog({
                   <div className={styles.cardBody}>
                     <h3 className={styles.productTitle}>{item.title}</h3>
                     {item.hook && <p className={styles.productHook}>&quot;{item.hook}&quot;</p>}
-                    <p className={styles.productDesc}>{item.description}</p>
 
                     {item.dimensions && (
                       <div className={styles.dimensionsBadge}>
