@@ -477,7 +477,7 @@ export default function ProductCatalog({
                   {/* Content */}
                   <div className={styles.cardBody}>
                     <h3 className={styles.productTitle}>{item.title}</h3>
-                    {item.hook && <p className={styles.productHook}>"{item.hook}"</p>}
+                    {item.hook && <p className={styles.productHook}>&quot;{item.hook}&quot;</p>}
                     <p className={styles.productDesc}>{item.description}</p>
 
                     {item.dimensions && (
@@ -559,7 +559,7 @@ export default function ProductCatalog({
                 <div className={styles.modalInfo}>
                   <span className={styles.modalBadge}>{quickViewItem.categoryLabel}</span>
                   <h3 className={styles.modalTitle}>{quickViewItem.title}</h3>
-                  {quickViewItem.hook && <p className={styles.modalHook}>"{quickViewItem.hook}"</p>}
+                  {quickViewItem.hook && <p className={styles.modalHook}>&quot;{quickViewItem.hook}&quot;</p>}
                   <span className={styles.modalPrice}>{quickViewItem.price}</span>
 
                   {quickViewItem.dailyMath && (
