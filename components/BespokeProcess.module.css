@@ -110,21 +110,6 @@
   flex-wrap: wrap;
 }
 
-.ghostBtn {
-  font-family: var(--font-body);
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  color: var(--brass);
-  text-decoration: none;
-  transition: opacity 0.25s ease;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.ghostBtn:hover { opacity: 0.7; }
-
 /* ══════════════════════════════════════════════════════════════
    BLOCK 2 — Process Steps
 ══════════════════════════════════════════════════════════════ */

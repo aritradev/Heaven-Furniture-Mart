@@ -156,14 +156,6 @@ export default function BespokeProcess() {
               >
                 Schedule Free Consultation
               </a>
-              <a
-                href="https://wa.me/8801960481983?text=Hi%2C%20I'd%20like%20a%20free%20room%20styling%20preview%20for%20my%20home"
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.ghostBtn}
-              >
-                ✦ Request a Room Preview
-              </a>
             </div>
           </motion.div>
         </div>
