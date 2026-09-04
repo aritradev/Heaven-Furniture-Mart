@@ -5,11 +5,11 @@ import Logo from './Logo';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
-  { label: 'About', href: '#about' },
-  { label: 'Shop', href: '#catalog' },
-  { label: 'Bespoke', href: '#bespoke-process' },
-  { label: 'Reviews', href: '#testimonials' },
-  { label: 'Visit Us', href: '#visit' },
+  { id: 'about', label: 'About', href: '#about' },
+  { id: 'catalog', label: 'Shop', href: '#catalog' },
+  { id: 'bespoke-process', label: 'Bespoke', href: '#bespoke-process' },
+  { id: 'testimonials', label: 'Reviews', href: '#testimonials' },
+  { id: 'visit', label: 'Visit Us', href: '#visit' },
 ];
 
 const BOTTOM_NAV_ITEMS = [
@@ -90,11 +90,11 @@ export default function Navbar() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Track active section on scroll for bottom navigation
+  // Track active section on scroll for both top and bottom navigation
   useEffect(() => {
     const sectionIds = ['about', 'catalog', 'bespoke-process', 'testimonials', 'visit'];
     const handleSectionObserve = () => {
-      const scrollPosition = window.scrollY + 200;
+      const scrollPosition = window.scrollY + 250;
       for (const id of sectionIds) {
         const element = document.getElementById(id);
         if (element) {
@@ -108,6 +108,7 @@ export default function Navbar() {
       }
     };
 
+    handleSectionObserve();
     window.addEventListener('scroll', handleSectionObserve, { passive: true });
     return () => window.removeEventListener('scroll', handleSectionObserve);
   }, []);
@@ -127,13 +128,21 @@ export default function Navbar() {
             />
           </a>
 
-          {/* Desktop Links */}
+          {/* Desktop Links with Active Highlight */}
           <ul className={styles.links}>
-            {NAV_LINKS.map(({ label, href }) => (
-              <li key={href}>
-                <a href={href} className={styles.link}>{label}</a>
-              </li>
-            ))}
+            {NAV_LINKS.map(({ id, label, href }) => {
+              const isActive = activeSection === id;
+              return (
+                <li key={href}>
+                  <a
+                    href={href}
+                    className={`${styles.link} ${isActive ? styles.activeLink : ''}`}
+                  >
+                    {label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
 
           {/* Desktop CTAs */}

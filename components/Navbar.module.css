@@ -58,8 +58,10 @@
   color: var(--text-secondary);
 }
 
-.link:hover {
+.link:hover,
+.activeLink {
   color: var(--brass) !important;
+  font-weight: 500;
 }
 
 .link::after {
@@ -68,13 +70,14 @@
   bottom: -4px;
   left: 0;
   width: 0;
-  height: 1px;
+  height: 2px;
   background: var(--brass);
   transition: width 300ms var(--ease-out);
 }
 
-.link:hover::after {
-  width: 100%;
+.link:hover::after,
+.activeLink::after {
+  width: 100% !important;
 }
 
 /* Desktop CTAs */
