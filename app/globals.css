@@ -30,8 +30,8 @@
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
   /* Spacing */
-  --section-pad-y: 120px;
-  --section-pad-x: max(24px, 5vw);
+  --section-pad-y: 100px;
+  --section-pad-x: clamp(16px, 4.5vw, 48px);
   --content-max: 1200px;
   --content-narrow: 700px;
 
@@ -62,6 +62,8 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
@@ -71,6 +73,8 @@ body {
   color: var(--text-primary);
   background-color: var(--surface-light);
   overflow-x: hidden;
+  width: 100%;
+  position: relative;
 }
 
 img {
@@ -103,10 +107,10 @@ h1, h2, h3, h4 {
   color: var(--text-primary);
 }
 
-h1 { font-size: clamp(2.8rem, 6vw, 5rem); }
-h2 { font-size: clamp(2rem, 4vw, 3.2rem); }
-h3 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
+h1 { font-size: clamp(2.5rem, 6vw, 4.8rem); }
+h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); }
+h3 { font-size: clamp(1.4rem, 3vw, 2rem); }
+h4 { font-size: clamp(1.15rem, 2vw, 1.45rem); }
 
 .micro-label {
   font-family: var(--font-body);
@@ -146,12 +150,16 @@ h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
   max-width: var(--content-max);
   margin: 0 auto;
   width: 100%;
+  padding-left: var(--section-pad-x);
+  padding-right: var(--section-pad-x);
 }
 
 .container-narrow {
   max-width: var(--content-narrow);
   margin: 0 auto;
   width: 100%;
+  padding-left: var(--section-pad-x);
+  padding-right: var(--section-pad-x);
 }
 
 .gold-divider {
@@ -182,7 +190,7 @@ h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  padding: 16px 36px;
+  padding: 15px 32px;
   border-radius: var(--radius);
   transition: all var(--duration) var(--ease-out);
   white-space: nowrap;
@@ -254,7 +262,14 @@ h4 { font-size: clamp(1.2rem, 2vw, 1.5rem); }
 
 @media (max-width: 768px) {
   :root {
-    --section-pad-y: 64px;
-    --section-pad-x: 20px;
+    --section-pad-y: 60px;
+    --section-pad-x: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --section-pad-y: 52px;
+    --section-pad-x: 16px;
   }
 }

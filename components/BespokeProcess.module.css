@@ -277,11 +277,11 @@
 }
 
 @media (max-width: 600px) {
-  .heroBlock { padding: 72px var(--section-pad-x) 64px; }
-  .processBlock { padding: 72px var(--section-pad-x); }
+  .heroBlock { padding: 56px var(--section-pad-x) 48px; }
+  .processBlock { padding: 56px var(--section-pad-x); }
   /* 40% of a phone-width column leaves a ~134px frame — too small to
      read a video in. Widen it so the loop is actually watchable. */
-  .imageAccent { width: 48%; }
+  .imageAccent { width: 44%; right: 0; bottom: -8px; }
   .stepsGrid { grid-template-columns: 1fr; }
   .trustGrid { grid-template-columns: 1fr; }
   .heroCtas { flex-direction: column; align-items: flex-start; }

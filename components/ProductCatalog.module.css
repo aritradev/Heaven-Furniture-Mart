@@ -1,7 +1,7 @@
 .catalogSection {
   background-color: var(--surface-cream, #F5F0E8);
   color: var(--text-primary, #2C1810);
-  padding: 6rem 0;
+  padding: 5rem var(--section-pad-x);
   position: relative;
   border-top: 1px solid rgba(176, 141, 87, 0.2);
 }
@@ -70,8 +70,8 @@
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2.25rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
 }
 
 .productCard {
