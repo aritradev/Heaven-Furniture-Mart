@@ -1,0 +1,586 @@
+/* ═══════════════════════════════════════════════════
+   FILM REEL — the channel's own footage
+   ═══════════════════════════════════════════════════
+
+   Every colour, face and easing value here resolves to a token in
+   app/globals.css. Two things are local, and both are deliberate:
+
+   · #0D1B1E — the exact colour BespokeProcess's gradient ends on. The
+     section opens on it so the seam between the two blocks disappears, then
+     drifts to --surface-dark by the footer. Without that first stop there is
+     a visible band where one section stops and the next starts.
+
+   · The 4px inset ring on a frame is rgba(176,141,87,…) rather than
+     var(--brass) at an opacity, because a frame's border has to sit *under*
+     the video's own edge without competing with it. Solid brass at this
+     width reads as a picture frame; 18% reads as a seam.
+   ═══════════════════════════════════════════════════ */
+
+.section {
+  /* Opens on the previous section's last colour — see note above. */
+  background: linear-gradient(180deg, #0D1B1E 0%, #12242A 46%, var(--surface-dark) 100%);
+  color: var(--text-on-dark);
+  padding: var(--section-pad-y) var(--section-pad-x);
+  position: relative;
+  overflow: hidden;
+}
+
+/* A single brass hairline across the top, fading at both ends. It is the only
+   ornament in the section, and it exists to mark the seam as intentional. */
+.section::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(176, 141, 87, 0.45), transparent);
+}
+
+/* Narrower than the --content-max the rest of the page runs at, and that is the
+   point. Three 300px verticals plus two 30px gaps is 960px exactly, so the grid
+   resolves to whole tracks with nothing left over, and the 16:9 tour lands at
+   960×540 rather than the 675px-tall wall it becomes at 1200. A tighter measure
+   also reads as a screening rather than a catalogue, which is what this is. */
+.inner {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Head ───────────────────────────────────────── */
+
+.head {
+  max-width: 640px;
+  margin-bottom: clamp(36px, 5vw, 56px);
+}
+
+.eyebrow {
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 16px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4.4vw, 3.2rem);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--text-on-dark);
+}
+
+.title em {
+  font-style: italic;
+  font-weight: 300;
+  color: var(--brass-light);
+}
+
+.lede {
+  margin-top: 18px;
+  font-size: 15.5px;
+  line-height: 1.75;
+  color: var(--text-on-dark-muted);
+  max-width: 56ch;
+}
+
+/* Set in the chip's own casing and tracking, so the sentence names the label
+   using the label's own letters — the reader matches the two by shape and does
+   not have to be told which cards are meant. */
+.ledeMark {
+  font-size: 0.8em;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-on-dark);
+  white-space: nowrap;
+}
+
+/* ── Cards ──────────────────────────────────────── */
+
+/* One grid. Seven clips, two ratios, no seam — the tour is a cell that spans,
+   not a block that sits above.
+
+   Tracks are `1fr` rather than a capped max so they always consume the row
+   whole: at 960px that is three 300px columns, and at every width down to the
+   rail it is two or three columns that still meet both edges. A fixed max
+   (`minmax(230px, 300px)`) counts columns by the max, which leaves 280-odd
+   px of dead space at the awkward widths in between. */
+.reel {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: clamp(20px, 2.4vw, 30px);
+}
+
+/* The six verticals are grid items of .reel, not of this wrapper. It exists
+   only so the narrow breakpoint can turn them into a swipe rail without taking
+   the tour with them. */
+.tail {
+  display: contents;
+}
+
+.card {
+  min-width: 0;
+}
+
+.cardWide {
+  grid-column: 1 / -1;
+  /* A little over the row gap, so the tour reads as the lead rather than one of
+     seven — but nowhere near enough to look like a section break. */
+  margin-bottom: clamp(10px, 1.4vw, 18px);
+}
+
+.frame {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: #0A1416;
+  /* A seam, not a picture frame. */
+  box-shadow: inset 0 0 0 1px rgba(176, 141, 87, 0.18);
+  transition: box-shadow var(--duration) var(--ease-out);
+}
+
+.card:hover .frame {
+  box-shadow: inset 0 0 0 1px rgba(201, 169, 110, 0.5),
+              0 18px 44px rgba(0, 0, 0, 0.42);
+}
+
+.trigger {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+/* The ring follows the convention set by .btn:focus-visible in globals —
+   cream line, brass halo. Inset, because an outline offset outward is clipped
+   by the frame's overflow: hidden and would be invisible exactly where it
+   matters. */
+.trigger:focus-visible {
+  outline: 2px solid var(--text-on-dark);
+  outline-offset: -6px;
+  box-shadow: inset 0 0 0 8px rgba(176, 141, 87, 0.4);
+}
+
+.poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transform: scale(1.015);
+  transition: opacity var(--duration-slow) var(--ease-out),
+              transform 900ms var(--ease-out),
+              filter var(--duration) var(--ease-out);
+}
+
+/* Set once the file has decoded, so the still arrives rather than snapping in. */
+.posterIn {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.card:hover .posterIn {
+  transform: scale(1.035);
+  filter: brightness(1.06);
+}
+
+/* Bottom-weighted, so the runtime stays readable over a bright frame without
+   dimming the whole image. */
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(6, 14, 16, 0.78) 0%,
+    rgba(6, 14, 16, 0.28) 34%,
+    rgba(6, 14, 16, 0) 62%
+  );
+  pointer-events: none;
+}
+
+.cue {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 58px;
+  height: 58px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--text-on-dark);
+  background: rgba(13, 27, 30, 0.5);
+  border: 1px solid rgba(250, 247, 242, 0.55);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  transition: transform var(--duration) var(--ease-out),
+              background var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+
+.cue svg {
+  width: 22px;
+  height: 22px;
+  margin-left: 2px; /* optical centring — the triangle's mass sits left */
+}
+
+.cardWide .cue {
+  width: 76px;
+  height: 76px;
+}
+
+.cardWide .cue svg {
+  width: 28px;
+  height: 28px;
+}
+
+.card:hover .cue,
+.trigger:focus-visible .cue {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--brass);
+  border-color: var(--brass-light);
+}
+
+/* ── The three saved references ─────────────────── */
+
+/* Their seam is cream rather than brass. Brass is this page's word for Heaven's
+   own work — it edges every frame, every eyebrow, every rule — so the three
+   clips that are not theirs do not get to wear it. The difference is quiet on
+   purpose: the chip below the frame does the telling, the colour only stops it
+   lying. There is deliberately no sticker on the image itself; seven rotated
+   tags would be louder than the disclosure needs to be, and the chip sits
+   16px under the frame either way. */
+.card[data-own='no'] .frame {
+  box-shadow: inset 0 0 0 1px rgba(250, 247, 242, 0.2);
+}
+
+.card[data-own='no']:hover .frame,
+.card[data-own='no'].cardLive .frame {
+  box-shadow: inset 0 0 0 1px rgba(250, 247, 242, 0.42),
+              0 18px 44px rgba(0, 0, 0, 0.42);
+}
+
+.clock {
+  position: absolute;
+  bottom: 12px;
+  left: 13px;
+  font-family: var(--font-body);
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-on-dark);
+  background: rgba(6, 14, 16, 0.55);
+  border: 1px solid rgba(250, 247, 242, 0.16);
+  border-radius: 2px;
+  padding: 3px 8px;
+}
+
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+/* ── Meta ───────────────────────────────────────── */
+
+.meta {
+  padding-top: 16px;
+}
+
+.kind {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass);
+  margin-bottom: 7px;
+}
+
+/* Brass says Heaven made it. The saved references get plain cream at half
+   strength — same size, same position, same words-in-caps treatment, just not
+   the house colour. Scoped through .card so CSS Modules has a class to hash;
+   a bare [data-own] selector would leak to every element on the page. */
+.card[data-own='no'] .kind {
+  color: rgba(250, 247, 242, 0.5);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-size: 1.28rem;
+  font-weight: 400;
+  line-height: 1.25;
+  color: var(--text-on-dark);
+}
+
+.cardWide .cardTitle {
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+}
+
+.note {
+  margin-top: 7px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--text-on-dark-muted);
+}
+
+.close {
+  margin-top: 12px;
+  font-size: 11.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+  border-bottom: 1px solid rgba(250, 247, 242, 0.25);
+  padding-bottom: 2px;
+  transition: color var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+
+.close:hover {
+  color: var(--brass-light);
+  border-color: var(--brass);
+}
+
+.close:focus-visible {
+  outline: 2px solid var(--text-on-dark);
+  outline-offset: 3px;
+}
+
+/* A playing card holds its lift so the open video reads as the active object
+   on the page rather than one tile among six. */
+.cardLive .frame {
+  box-shadow: inset 0 0 0 1px rgba(201, 169, 110, 0.55),
+              0 18px 44px rgba(0, 0, 0, 0.42);
+}
+
+/* The wide card's caption runs beside its note rather than above it — at
+   1200px a single stacked column leaves most of the line empty. */
+@media (min-width: 760px) {
+  .cardWide .meta {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 8px clamp(24px, 4vw, 56px);
+    align-items: end;
+  }
+
+  .cardWide .kind {
+    grid-column: 1;
+  }
+
+  .cardWide .cardTitle {
+    grid-column: 1;
+  }
+
+  .cardWide .note {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    margin-top: 0;
+    align-self: end;
+    padding-bottom: 4px;
+  }
+
+  .cardWide .close {
+    grid-column: 1;
+  }
+}
+
+/* ── Foot ───────────────────────────────────────── */
+
+.foot {
+  margin-top: clamp(44px, 5.5vw, 68px);
+  padding-top: 26px;
+  border-top: 1px solid rgba(250, 247, 242, 0.1);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 32px;
+}
+
+.channel {
+  font-family: var(--font-display);
+  font-size: 1.32rem;
+  color: var(--text-on-dark);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 9px;
+  transition: color var(--duration) var(--ease-out);
+}
+
+.channel span {
+  font-family: var(--font-body);
+  font-size: 13px;
+  color: var(--brass);
+  transition: transform var(--duration) var(--ease-out);
+}
+
+.channel:hover {
+  color: var(--brass-light);
+}
+
+.channel:hover span {
+  transform: translate(3px, -3px);
+}
+
+.watch {
+  font-family: var(--font-body);
+  font-size: 12.5px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-on-dark-muted);
+  border-bottom: 1px solid rgba(250, 247, 242, 0.22);
+  padding-bottom: 3px;
+  transition: color var(--duration) var(--ease-out),
+              border-color var(--duration) var(--ease-out);
+}
+
+.watch:hover {
+  color: var(--text-on-dark);
+  border-color: var(--brass);
+}
+
+.channel:focus-visible,
+.watch:focus-visible {
+  outline: 2px solid var(--text-on-dark);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px rgba(176, 141, 87, 0.45);
+  border-radius: 2px;
+}
+
+/* ── Narrow ─────────────────────────────────────── */
+
+@media (max-width: 600px) {
+  /* The tour stays a full-width block. The six verticals become a rail.
+     Stacked one-per-row on a 375px phone they measure 4,761px — six full
+     screens of scrolling to pass six clips, which puts the testimonials below
+     into a different session entirely. Halving the width to fit two across
+     gives a 165px video, which is a thumbnail with a play button rather than
+     something anyone watches. So they swipe: full ratio kept, each card large
+     enough to read, and it is how vertical video is consumed everywhere else on
+     a phone. The scrollbar is hidden but the rail stays keyboard- and
+     screen-reader-reachable — it is a scroll container, so the cards keep their
+     tab order and focus scrolls them into view. */
+  .reel {
+    display: block;
+  }
+
+  .cardWide {
+    margin-bottom: clamp(26px, 7vw, 34px);
+  }
+
+  .tail {
+    display: flex;
+    gap: 14px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    /* Bleed to both screen edges, so the row reads as continuing past the
+       frame instead of stopping at a margin. */
+    margin-inline: calc(var(--section-pad-x) * -1);
+    padding-inline: var(--section-pad-x);
+    /* And this is what makes that padding survive. A snap position aligns the
+       card's start edge with the *snapport*, which begins at the padding box —
+       so without this the browser snaps 16px in on load and parks the first
+       card flush against the screen edge, out of line with the headline and
+       the tour above it. scroll-padding insets the snapport instead, so every
+       card snaps to the text margin. */
+    scroll-padding-inline: var(--section-pad-x);
+    /* Room for the focus ring, which would otherwise be clipped by overflow. */
+    padding-block: 4px;
+  }
+
+  .tail::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tail > * {
+    flex: 0 0 66%;
+    scroll-snap-align: start;
+  }
+
+  /* One hint that there is more to the right: the last card's note stays
+     visible, so the row never looks like it ends flush with the screen. */
+  .tail::after {
+    content: '';
+    flex: 0 0 max(4px, calc(var(--section-pad-x) - 14px));
+  }
+
+  .cue {
+    width: 52px;
+    height: 52px;
+  }
+
+  .cardWide .cue {
+    width: 60px;
+    height: 60px;
+  }
+
+  .cardWide .cue svg {
+    width: 23px;
+    height: 23px;
+  }
+
+  .foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+  }
+}
+
+/* ── Reduced motion ─────────────────────────────── */
+
+/* Both the class and the query: the class keeps React's copy of the preference
+   and the CSS in agreement, the query covers the case where the stylesheet
+   applies before the effect has run. */
+.still .poster,
+.still .cue,
+.still .frame,
+.still .channel span {
+  transition: none;
+}
+
+.still .posterIn,
+.still .card:hover .posterIn {
+  transform: none;
+  filter: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poster,
+  .cue,
+  .frame,
+  .channel span,
+  .close,
+  .watch {
+    transition: none;
+  }
+
+  .posterIn,
+  .card:hover .posterIn {
+    transform: none;
+    filter: none;
+  }
+
+  .card:hover .cue,
+  .trigger:focus-visible .cue {
+    transform: translate(-50%, -50%);
+  }
+
+  .channel:hover span {
+    transform: none;
+  }
+}
