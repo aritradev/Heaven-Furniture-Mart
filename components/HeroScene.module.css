@@ -1,22 +1,20 @@
+/* ── Hero ──────────────────────────────────────────────────────
+   The showroom footage runs full-bleed behind a single centred column, with
+   the live strip pinned to the base. Type and colour come entirely from the
+   existing tokens; what changed is the treatment, not the palette. */
+
 .hero {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  padding-bottom: 60px;
   overflow: hidden;
-  background: linear-gradient(135deg, #0D1B1E 0%, #1A2B2F 40%, #1E2D31 100%);
+  /* The scrim's own darkest stop, so the section never flashes a lighter tone
+     before the video's wrapper paints. */
+  background: #0D1B1E;
   display: flex;
   flex-direction: column;
 }
 
-/* Three.js Canvas */
-.canvas {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-}
-
-/* Text Overlay */
 .overlay {
   position: relative;
   z-index: 2;
@@ -25,53 +23,83 @@
   align-items: center;
   justify-content: center;
   flex: 1;
-  padding: 100px var(--section-pad-x) 40px;
+  /* Bottom padding clears the live strip. */
+  padding: 104px var(--section-pad-x) 92px;
 }
 
 .content {
   text-align: center;
-  max-width: 860px;
+  max-width: 900px;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+/* ── eyebrow ──────────────────────────────────────────────── */
+
 .eyebrow {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  gap: 14px;
   font-family: var(--font-body);
-  font-size: 13px;
+  font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.25em;
-  color: var(--brass);
-  margin-bottom: 24px;
+  letter-spacing: 0.22em;
   text-transform: uppercase;
+  color: var(--brass-light);
+  margin-bottom: 26px;
 }
+
+/* Hairlines that fade outward, so the label sits inside a mark rather than
+   under a floating strapline. */
+.eyebrowRule {
+  display: block;
+  width: clamp(24px, 7vw, 62px);
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--brass));
+}
+
+.eyebrowRule:last-child {
+  background: linear-gradient(90deg, var(--brass), transparent);
+}
+
+/* ── headline ─────────────────────────────────────────────── */
 
 .title {
   font-family: var(--font-display);
-  font-size: clamp(3rem, 6.5vw, 5.2rem);
+  font-size: clamp(3.1rem, 7vw, 5.6rem);
   font-weight: 400;
-  line-height: 1.08;
+  line-height: 1.04;
+  /* Tighter than the display face's default fit. At this size Cormorant's
+     normal tracking reads loose and webby; pulling it in gives the pair of
+     lines a single carved mass. */
+  letter-spacing: -0.03em;
   color: var(--text-on-dark);
-  margin-bottom: 24px;
-  letter-spacing: -0.02em;
+  margin-bottom: 26px;
+  /* The chandeliers peak near white (0.976), so the type needs its own
+     separation from the frame rather than relying on the scrim alone. */
+  text-shadow: 0 2px 28px rgba(13, 27, 30, 0.55);
 }
 
 .title em {
   font-style: italic;
   font-weight: 300;
   color: var(--brass-light);
+  /* Italic Cormorant at 300 sets narrower than the roman above it; a hair of
+     positive tracking keeps the two lines optically the same width. */
+  letter-spacing: -0.012em;
 }
 
 .subtitle {
   font-family: var(--font-body);
-  font-size: clamp(16px, 1.8vw, 19px);
+  font-size: clamp(15px, 1.7vw, 18px);
   font-weight: 300;
-  line-height: 1.7;
-  color: var(--text-on-dark-muted);
-  max-width: 560px;
-  margin: 0 auto 36px;
+  line-height: 1.72;
+  color: rgba(250, 247, 242, 0.78);
+  max-width: 545px;
+  margin: 0 auto 38px;
+  text-shadow: 0 1px 14px rgba(13, 27, 30, 0.5);
 }
 
 .ctas {
@@ -80,124 +108,197 @@
   justify-content: center;
   gap: 16px;
   flex-wrap: wrap;
-  margin-bottom: 48px;
+  margin-bottom: 52px;
 }
 
-/* ── Integrated Hero Stats Bar ── */
-.heroStatsContainer {
+/* ── stats ────────────────────────────────────────────────── */
+
+/* Hairline rule above, dividers between — the figures are evidence under the
+   pitch, so they get a rule and nothing else. */
+.stats {
   width: 100%;
-  max-width: 840px;
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(176, 141, 87, 0.22);
-  border-radius: 4px;
-  padding: 20px 24px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
-}
-
-.heroStatsGrid {
+  max-width: 780px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  align-items: center;
+  gap: 18px;
+  padding-top: 26px;
+  border-top: 1px solid rgba(176, 141, 87, 0.28);
 }
 
-.heroStatItem {
+.stat {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  position: relative;
 }
 
-.heroStatItem:not(:last-child)::after {
+.stat:not(:last-child)::after {
   content: '';
   position: absolute;
-  right: -8px;
-  top: 15%;
-  height: 70%;
+  right: -9px;
+  top: 12%;
+  height: 62%;
   width: 1px;
   background: rgba(176, 141, 87, 0.2);
 }
 
-.heroStatNum {
+.statNum {
   font-family: var(--font-display);
-  font-size: clamp(1.8rem, 2.8vw, 2.5rem);
+  font-size: clamp(1.9rem, 2.9vw, 2.6rem);
   font-weight: 300;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--brass-light);
-  line-height: 1.1;
-  letter-spacing: -0.01em;
 }
 
-.heroStatLabel {
+.statLabel {
   font-family: var(--font-body);
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 500;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(250, 247, 242, 0.6);
-  margin-top: 4px;
+  color: rgba(250, 247, 242, 0.55);
+  margin-top: 6px;
 }
 
-/* Scroll Indicator */
-.scrollIndicator {
+/* ── the live strip ───────────────────────────────────────── */
+
+/* The signature. It reframes the footage as a window into the actual shop
+   rather than decoration, and it doubles as the scroll cue — a line across the
+   base of the viewport draws the eye down more quietly than an arrow does. */
+.live {
   position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 2;
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
+  gap: 12px;
+  padding: 16px var(--section-pad-x);
+  border-top: 1px solid rgba(176, 141, 87, 0.32);
+  background: linear-gradient(180deg, rgba(13, 27, 30, 0) 0%, rgba(13, 27, 30, 0.5) 100%);
+  text-decoration: none;
+  transition: background 320ms var(--ease-out);
 }
 
-.scrollLine {
-  width: 1px;
-  height: 32px;
-  background: linear-gradient(to bottom, var(--brass), transparent);
-  animation: scrollPulse 2s ease-in-out infinite;
+.live:hover {
+  background: linear-gradient(180deg, rgba(13, 27, 30, 0.2) 0%, rgba(13, 27, 30, 0.66) 100%);
 }
 
-.scrollIndicator span {
+.liveDot {
+  flex-shrink: 0;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--brass-light);
+  box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.55);
+  animation: livePulse 2.8s var(--ease-out) infinite;
+}
+
+.liveText {
   font-family: var(--font-body);
-  font-size: 9px;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  color: var(--text-on-dark-muted);
+  font-size: 11.5px;
+  font-weight: 400;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: rgba(250, 247, 242, 0.62);
 }
 
-@keyframes scrollPulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-  50% { opacity: 1; transform: scaleY(1); }
+.liveText strong {
+  font-weight: 600;
+  color: var(--text-on-dark);
 }
 
-/* ─── Mobile ─── */
+.liveGo {
+  font-family: var(--font-body);
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brass-light);
+  padding-left: 12px;
+  border-left: 1px solid rgba(176, 141, 87, 0.3);
+  transition: color 220ms ease;
+}
+
+.live:hover .liveGo {
+  color: #FFFFFF;
+}
+
+.live:focus-visible {
+  outline: 2px solid var(--brass);
+  outline-offset: -3px;
+}
+
+/* Slow and shallow. A quick blink reads as a notification badge; this should
+   read as a room with the lights on. */
+@keyframes livePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.5); }
+  70% { box-shadow: 0 0 0 7px rgba(201, 169, 110, 0); }
+}
+
+/* ── clearing the fixed bottom nav ─────────────────────────
+   Keyed to 900px, not 768px, because that is where Navbar's .bottomBar starts
+   showing. At the narrower breakpoint the strip spends the 769–900px band
+   underneath the bar. */
+
+@media (max-width: 900px) {
+  /* Bottom padding clears the strip in its lifted position. */
+  .overlay {
+    padding-bottom: calc(140px + env(safe-area-inset-bottom, 0px));
+  }
+
+  /* Same 64px offset as ScrollBottomBlur — if the bar's height changes, both
+     move together. */
+  .live {
+    bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+    /* The bar's own hairline now sits directly below this one, so the fill is
+       lightened at the top: two solid ruled bands stacked read as one heavy
+       block rather than a line across the footage. */
+    background: linear-gradient(180deg, rgba(13, 27, 30, 0.1) 0%, rgba(13, 27, 30, 0.62) 100%);
+  }
+
+  .live:hover {
+    background: linear-gradient(180deg, rgba(13, 27, 30, 0.28) 0%, rgba(13, 27, 30, 0.72) 100%);
+  }
+}
+
+/* ── mobile ───────────────────────────────────────────────── */
+
 @media (max-width: 768px) {
   .hero {
     min-height: 100svh;
-    padding-bottom: 30px;
   }
 
   .overlay {
-    padding-top: 90px;
-    padding-bottom: 20px;
+    padding-top: 92px;
+  }
+
+  .eyebrow {
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    gap: 10px;
+    margin-bottom: 20px;
   }
 
   .title {
-    font-size: clamp(2.2rem, 9vw, 3rem);
+    font-size: clamp(2.3rem, 9.5vw, 3.2rem);
+    margin-bottom: 20px;
   }
 
   .subtitle {
-    font-size: 14px;
-    margin-bottom: 28px;
+    font-size: 14.5px;
+    line-height: 1.65;
+    margin-bottom: 30px;
   }
 
   .ctas {
     flex-direction: column;
     gap: 12px;
-    margin-bottom: 32px;
+    margin-bottom: 38px;
     width: 100%;
   }
 
@@ -206,24 +307,40 @@
     max-width: 320px;
   }
 
-  .heroStatsGrid {
+  .stats {
     grid-template-columns: repeat(2, 1fr);
-    gap: 16px 8px;
+    gap: 20px 8px;
+    padding-top: 22px;
   }
 
-  .heroStatItem:not(:last-child)::after {
+  /* The divider only reads as a divider on a single row; on a 2×2 grid it
+     lands mid-block and looks like a stray mark. */
+  .stat:not(:last-child)::after {
     display: none;
   }
 
-  .heroStatNum {
-    font-size: 1.8rem;
+  .statNum {
+    font-size: 1.85rem;
   }
 
-  .heroStatLabel {
+  /* "Visit us" is the third thing on a line that has to fit a phone. The dot
+     and the sentence carry the meaning; the affordance is the tap itself. */
+  .liveGo {
+    display: none;
+  }
+
+  .liveText {
     font-size: 10px;
+    letter-spacing: 0.1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .liveDot {
+    animation: none;
   }
 
-  .scrollIndicator {
-    display: none;
+  .live {
+    transition: none;
   }
 }

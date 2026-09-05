@@ -196,6 +196,22 @@ h4 { font-size: clamp(1.15rem, 2vw, 1.45rem); }
   white-space: nowrap;
 }
 
+/* The UA ring is a dark hairline, which disappears on a brass fill and on the
+   hero's footage. A cream ring with a brass halo reads on every surface the
+   buttons actually sit on — light sections, dark sections, and video. */
+.btn:focus-visible {
+  outline: 2px solid var(--text-on-dark);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 4px rgba(176, 141, 87, 0.55);
+}
+
+/* The dark-on-light variant is the one case where cream-on-cream would vanish,
+   so it inverts: brass ring, cream halo. */
+.btn-outline-dark:focus-visible {
+  outline-color: var(--brass-dark);
+  box-shadow: 0 0 0 4px rgba(250, 247, 242, 0.9);
+}
+
 .btn-primary {
   background: var(--brass);
   color: #fff;
