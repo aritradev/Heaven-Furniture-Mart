@@ -23,6 +23,23 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: relative;
+}
+
+/* Language toggle — absolute top-right so it never collides with the
+   centred logo on mobile. Hidden on desktop where it lives in .ctaGroup. */
+.mobileLang {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .mobileLang {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
 }
 
 /* Logo */

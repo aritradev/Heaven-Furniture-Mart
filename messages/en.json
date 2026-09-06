@@ -1,0 +1,584 @@
+{
+  "common": {
+    "brand": "Heaven Furniture Mart",
+    "eng": "ENG",
+    "bn": "বাংলা",
+    "langLabel": "Change language",
+    "logoAlt": "Heaven Furniture Mart logo",
+    "brandFull": "Heaven Furniture Mart — Bespoke Furniture, Chattogram"
+  },
+  "nav": {
+    "about": "About",
+    "catalog": "Shop",
+    "bespokeProcess": "Bespoke",
+    "testimonials": "Reviews",
+    "visit": "Visit Us",
+    "whatsapp": "WhatsApp",
+    "inquire": "Inquire",
+    "freeConsultation": "Free Consultation"
+  },
+  "hero": {
+    "eyebrow": "Designed · Crafted · Customized",
+    "titleLine1": "Furniture, Crafted",
+    "titleLine2": "Around You",
+    "subtitle": "Bespoke luxury furniture & interior styling from Chattogram's finest artisans. Every piece built around your space, your style, your life.",
+    "ctaExplore": "Explore Collections",
+    "ctaWhatsApp": "WhatsApp Us",
+    "liveTitle": "Showroom details, hours and directions",
+    "liveText1": "Showroom, Chattogram —",
+    "liveText2": "on view now",
+    "liveVisit": "Visit us",
+    "stats": {
+      "homeowners": "Happy homeowners",
+      "years": "Years of excellence",
+      "projects": "Bespoke projects",
+      "showroom": "Flagship showroom"
+    }
+  },
+  "about": {
+    "ariaLabel": "About Heaven Furniture Mart & Our Journey",
+    "microLabel": "ABOUT HEAVEN FURNITURE",
+    "mainTitle": "Crafting Comfort & Elevating Spaces",
+    "journeyTag": "OUR JOURNEY",
+    "journeyTitle": "A Legacy of Excellence",
+    "milestones": {
+      "2020": {
+        "title": "Founded in Chattogram",
+        "desc": "Heaven Furniture Mart was established by Managing Director Abul Kalam Bhuiyan with a commitment to bespoke luxury."
+      },
+      "2021": {
+        "title": "Agrabad Flagship Showroom",
+        "desc": "Opened our premier showroom on Agrabad Access Road — now one of Chattogram's largest custom furniture galleries."
+      },
+      "2024": {
+        "title": "International Furniture Fair",
+        "desc": "Exhibited at the International Furniture Fair, showcasing hand-carved teak artistry to nationwide acclaim."
+      },
+      "2026": {
+        "title": "National & Industry Recognition",
+        "desc": "Recognized by Bangladesh Furniture Industries Owners Association (BFIOA) and Chattogram Chamber of Commerce."
+      }
+    },
+    "visionTag": "FOUNDER'S VISION",
+    "visionTitle": "Bespoke Furniture, Crafted Around You",
+    "quote": "\"At Heaven Furniture Mart, we believe furniture is more than just function; it is a reflection of lifestyle, taste, and comfort. Every piece we create is designed to bring lasting elegance into the homes of our clients.\"",
+    "founderName": "Abul Kalam Bhuiyan",
+    "founderRole": "Managing Director & Founder",
+    "introDesc": "Founded in 2020, Heaven Furniture Mart has grown to become one of Chattogram's premier bespoke furniture studios. From our large showroom on Agrabad Access Road, we design and craft custom furniture — sofas, beds, dining sets, office pieces — built around what you actually want, not pulled off a shelf."
+  },
+  "catalog": {
+    "microLabel": "OUR COLLECTIONS",
+    "sectionHeader": "Explore Our Collections",
+    "headerSub": "Crafted from solid Chittagong teak, top-grain leathers, and opulent velvets engineered for enduring comfort.",
+    "categories": {
+      "all": "All Furniture",
+      "living": "Living Room",
+      "bedroom": "Bedroom",
+      "dining": "Dining Room",
+      "office": "Office & Chairs"
+    },
+    "trustBar": {
+      "delivery": "Free Delivery & Assembly in Chattogram",
+      "warranty": "2-Year Solid Teak Warranty",
+      "exchange": "7-Day Exchange Guarantee",
+      "emi": "EMI Available With 0% Interest"
+    },
+    "dimsLabel": "📐 Dims:",
+    "quickView": "Quick View",
+    "seeInMyRoom": "See In My Room",
+    "orderWhatsApp": "💬 Order on WhatsApp",
+    "modal": {
+      "investment": "Investment Value:",
+      "dimensions": "Dimensions (W×D×H):",
+      "craftsmanship": "Key Craftsmanship & Benefits:",
+      "replyNote": "⚡ We reply within 15 minutes, 10am–10pm on WhatsApp.",
+      "seeInRoom": "See It In My Room",
+      "reserve": "💬 Reserve / Inquire on WhatsApp →"
+    },
+    "products": {
+      "classic-sofa": {
+        "title": "Classic Cream Sofa Set",
+        "category": "Living Room",
+        "price": "৳185,000",
+        "hook": "The drawing room centerpiece your guests will admire and remember.",
+        "description": "Hand-sculpted by Chattogram artisans from seasoned Chittagong teak. Upholstered in treated cream velvet that repels dark tea, oil, and everyday spills without staining.",
+        "specs": [
+          "Kiln-dried timber foundation featuring reinforced mortise-and-tenon joinery",
+          "Spill-shield fabric — liquids bead up for instant wiping",
+          "High-resilience cushion core maintains full shape over decades",
+          "Complete 4-piece suite: 3-seater sofa, 2 matching armchairs, and center coffee table"
+        ],
+        "dimensions": "3-Seater: 84\"W × 34\"D × 36\"H | Armchairs: 38\"W × 34\"D × 36\"H",
+        "dailyMath": "≈ ৳34/night over 15 years. Free delivery + in-home assembly included."
+      },
+      "blue-sofa-pair": {
+        "title": "Royal Blue Velvet Pair",
+        "category": "Living Room",
+        "price": "৳145,000",
+        "hook": "Two statement armchairs that instantly elevate the tone of your living space.",
+        "description": "Deep cobalt velvet framed by hand-applied gold leaf filigree. Designed as a conversation pair for formal lounges or master bedroom corners.",
+        "specs": [
+          "Artisanal gilding over solid hardwood contours",
+          "Tailored seat density — customized to your preferred firmness",
+          "Plush upholstery built to withstand years of active hosting"
+        ],
+        "dimensions": "Armchairs: 36\"W × 34\"D × 38\"H | Accent Table: 36\" Dia",
+        "dailyMath": "≈ ৳26/night over 15 years."
+      },
+      "modular-sofa": {
+        "title": "Modular Sectional Sofa",
+        "category": "Living Room",
+        "price": "৳195,000",
+        "hook": "Adaptable seating designed for fluid spaces and growing families.",
+        "description": "Wrapped in neutral woven linen with movable chaise components. Easily reconfigures from an expansive L-corner into standalone seating modules.",
+        "specs": [
+          "Reversible sectional layout to suit left or right room corners",
+          "Stain-repellent textile weave engineered for easy spot cleaning",
+          "Interlocking hidden connectors keep sections firmly anchored"
+        ],
+        "dimensions": "110\"W × 68\"D (Chaise) × 32\"H",
+        "dailyMath": "≈ ৳35/night over 15 years."
+      },
+      "glass-showcase": {
+        "title": "Carved Glass Display Showcase",
+        "category": "Living Room",
+        "price": "৳88,000",
+        "hook": "A lit gallery cabinet for heirloom china, awards, and cherished keepsakes.",
+        "description": "Rich mahogany frame with integrated warm spotlights that illuminate every shelf. Features brass key locks to protect delicate valuables.",
+        "specs": [
+          "Built-in warm LED illumination creates ambient evening backlighting",
+          "Heavy-gauge tempered glass shelves with high weight capacity",
+          "Keyed locking doors secure collectibles against curious toddlers"
+        ],
+        "dimensions": "42\"W × 18\"D × 78\"H",
+        "dailyMath": "≈ ৳24/day over 10 years. Complete installation included."
+      },
+      "shoe-cabinet": {
+        "title": "Minimalist Black & Gold Cabinet",
+        "category": "Living Room",
+        "price": "৳42,000",
+        "hook": "Organized entryway storage disguised as a sleek contemporary console.",
+        "description": "Satin black timber accented with brushed brass pull handles. Features soft-closing doors that shut noiselessly every single time.",
+        "specs": [
+          "Conceals up to 24 pairs of footwear across ventilated slatted shelves",
+          "Architectural metal hardware with anti-tarnish coating",
+          "German-engineered hinges prevent door slamming"
+        ],
+        "dimensions": "36\"W × 15\"D × 42\"H",
+        "dailyMath": "≈ ৳11/day over 10 years."
+      },
+      "emerald-bed": {
+        "title": "Majesty Emerald Velvet Bed",
+        "category": "Bedroom",
+        "price": "৳165,000",
+        "hook": "Deep jewel-toned upholstery crafted for luxurious, restful sleep.",
+        "description": "Hand-tufted emerald green headboard framed in brass metallic trim. Supported by a noise-free steel slat system that eliminates squeaks.",
+        "specs": [
+          "Diamond-tufted backrest with polished gold-tone perimeter",
+          "Heavy-duty steel foundation grid guarantees zero mattress sagging",
+          "Generous King size proportions (6ft × 7ft) for optimal relaxation"
+        ],
+        "dimensions": "78\"W × 88\"L × 56\"H (King Size 6ft × 7ft)",
+        "dailyMath": "≈ ৳45/night over 10 years."
+      },
+      "teal-bed": {
+        "title": "Luxury Teal Velvet Bed",
+        "category": "Bedroom",
+        "price": "৳155,000",
+        "hook": "Seamless architectural design featuring built-in bedside nightstands.",
+        "description": "Deep aqua upholstery with floating side drawers. Streamlines your bedroom suite into one unified purchase.",
+        "specs": [
+          "Integrated dual nightstands save floor space and matching effort",
+          "Soft-touch plush fabric treated against dust accumulation",
+          "Custom size options tailored to your layout"
+        ],
+        "dimensions": "74\"W × 86\"L × 52\"H",
+        "dailyMath": "≈ ৳42/night over 10 years."
+      },
+      "navy-bed": {
+        "title": "Royal Navy & Gold Velvet Bed",
+        "category": "Bedroom",
+        "price": "৳175,000",
+        "hook": "Our master bedroom flagship, constructed with heirloom solid teak.",
+        "description": "Deep midnight navy upholstery set within a carved teak frame and warm brass accents. Built to last for generations.",
+        "specs": [
+          "Moisture-resistant hardwood core engineered to withstand coastal humidity",
+          "Hand-finished inlay along headboard and footboard borders",
+          "High-backed ergonomic support ideal for reading in bed"
+        ],
+        "dimensions": "80\"W × 88\"L × 58\"H (King Size)",
+        "dailyMath": "≈ ৳48/night over 10 years. Includes white-glove setup."
+      },
+      "white-bed": {
+        "title": "White Wooden Panel Bed",
+        "category": "Bedroom",
+        "price": "৳125,000",
+        "hook": "Clean Scandi aesthetic paired with spacious under-bed storage drawers.",
+        "description": "Multi-layered satin white finish over a durable timber core. Conceals massive sliding under-bed drawers for extra linens and luggage.",
+        "specs": [
+          "Dual under-bed drawers swallow extra bedding and seasonal wardrobe",
+          "Durable protective enamel coating wipes clean easily with a soft cloth",
+          "Minimalist headboard suitable for modern interiors"
+        ],
+        "dimensions": "76\"W × 86\"L × 48\"H",
+        "dailyMath": "≈ ৳34/night over 10 years."
+      },
+      "marble-dining": {
+        "title": "Luxury Marble Dining Table Set",
+        "category": "Dining Room",
+        "price": "৳210,000",
+        "hook": "Calacatta marble paired with Nappa leather for memorable family feasts.",
+        "description": "Polished natural stone surface treated with a protective seal. Accompanied by 6 plush Nappa leather chairs for long dinner conversations.",
+        "specs": [
+          "Sealed Calacatta slab resists hot serving dishes and dark spice oils",
+          "6 ergonomic seats wrapped in supple leather upholstery",
+          "Spacious 8-foot surface comfortably accommodates up to 8 guests"
+        ],
+        "dimensions": "96\"W × 42\"D × 30\"H (8-Seater 8ft)",
+        "dailyMath": "≈ ৳38/day over 15 years."
+      },
+      "carved-dining": {
+        "title": "Carved Wooden Dining Set",
+        "category": "Dining Room",
+        "price": "৳180,000",
+        "hook": "Artisanal floral woodwork brought to life in solid Chittagong teak.",
+        "description": "Classic heritage table surrounded by 6 intricately detailed chairs. Polished in a warm lustrous finish that deepens in character over time.",
+        "specs": [
+          "Hand-carved relief patterns by master woodcraftsmen",
+          "Solid timber joinery crafted for generations of everyday family use",
+          "Includes 6 ornate high-backed dining chairs"
+        ],
+        "dimensions": "72\"W × 38\"D × 30\"H (6-Seater 6ft)",
+        "dailyMath": "≈ ৳33/day over 15 years."
+      },
+      "cream-dining": {
+        "title": "Cream Marble Dining Table Set",
+        "category": "Dining Room",
+        "price": "৳165,000",
+        "hook": "Warm beige Italian stone matched with champagne velvet seating.",
+        "description": "Sleek cream marble top on a sturdy timber pedestal base. Paired with 6 cushioned velvet chairs for refined dining comfort.",
+        "specs": [
+          "Hydrophobic sealant prevents liquid absorption and ring marks",
+          "Highback champagne velvet chairs provide lumbar support during long meals",
+          "Sturdy center pedestal base optimizes legroom for all seated guests"
+        ],
+        "dimensions": "72\"W × 38\"D × 30\"H (6-Seater 6ft)",
+        "dailyMath": "≈ ৳30/day over 15 years."
+      },
+      "gold-chair": {
+        "title": "Royal Gold Carved Chair",
+        "category": "Dining Room",
+        "price": "৳28,000",
+        "hook": "A single handcrafted accent chair to enrich any room corner.",
+        "description": "Solid mahogany frame with gilded detail carving. Perfect as a standalone vanity seat, desk accent, or dining headpiece.",
+        "specs": [
+          "Handcrafted mahogany frame with lustrous metallic detailing",
+          "Choice of custom upholstery fabrics to coordinate with your home",
+          "Compact armless profile fits easily into bedrooms or dining rooms"
+        ],
+        "dimensions": "22\"W × 24\"D × 40\"H",
+        "dailyMath": "≈ ৳5/day over 15 years."
+      },
+      "executive-chair-brown": {
+        "title": "Executive Brown Tufted Leather Chair",
+        "category": "Office & Chairs",
+        "price": "৳48,000",
+        "hook": "Chesterfield craftsmanship designed for executive home offices.",
+        "description": "Hand-finished cognac leather with button tufting mounted on a solid wooden swivel base. Combines vintage elegance with modern ergonomics.",
+        "specs": [
+          "Supple full-grain upholstery that develops a rich vintage patina",
+          "Smooth pneumatic height adjustment with multi-position tilt lock",
+          "Solid hardwood 5-star swivel base with dual-wheel casters"
+        ],
+        "dimensions": "28\"W × 28\"D × 46-50\"H",
+        "dailyMath": "≈ ৳24/workday over 10 years."
+      },
+      "executive-chair-black": {
+        "title": "Executive Black Leather Tufted Chair",
+        "category": "Office & Chairs",
+        "price": "৳52,000",
+        "hook": "Highback director seat with mahogany armrests for video call presence.",
+        "description": "Supple black leather with deep cushioned contouring and real wood accents. Provides full upper back and neck support throughout long work sessions.",
+        "specs": [
+          "Refined obsidian upholstery paired with polished hardwood armrests",
+          "High-density molded foam padding prevents seat flattening",
+          "Heavy-duty tilt mechanism engineered for 12+ hour daily use"
+        ],
+        "dimensions": "29\"W × 28\"D × 48-52\"H",
+        "dailyMath": "≈ ৳26/workday over 10 years."
+      },
+      "mesh-chair": {
+        "title": "Ergonomic Highback Mesh Chair",
+        "category": "Office & Chairs",
+        "price": "৳32,000",
+        "hook": "Engineered spinal support to eliminate fatigue during long WFH hours.",
+        "description": "Breathable mesh backrest equipped with dynamic lumbar support and 4D adjustable armrests. Keeps you cool and posture-aligned all day.",
+        "specs": [
+          "Dynamic lumbar cradle adjusts to your lower back's natural curve",
+          "High-tension breathable weave prevents heat build-up",
+          "4D multi-directional armrests and silent smooth-rolling casters"
+        ],
+        "dimensions": "26\"W × 26\"D × 44-48\"H",
+        "dailyMath": "≈ ৳16/workday over 10 years."
+      },
+      "black-padded-chair": {
+        "title": "Executive Black Padded Wood Chair",
+        "category": "Office & Chairs",
+        "price": "৳38,000",
+        "hook": "Sleek dark walnut bentwood design for compact modern workspaces.",
+        "description": "Curved walnut veneer shell with padded faux leather seat and back cushion. Delivers executive comfort in a space-saving footprint.",
+        "specs": [
+          "Molded walnut bentwood frame with scratch-resistant clear coat",
+          "Padded leatherette cushioning for easy wiping and maintenance",
+          "Compact swivel footprint fits neatly under standard desks"
+        ],
+        "dimensions": "24\"W × 25\"D × 38-42\"H",
+        "dailyMath": "≈ ৳19/workday over 10 years."
+      }
+    },
+    "whatsapp": {
+      "template": "Hi! I'm interested in the {product} ({price}). Is it in stock? My delivery area is ___."
+    }
+  },
+  "bespoke": {
+    "ariaLabel": "Bespoke furniture and how it works",
+    "microLabel": "The Heaven Difference",
+    "heroTitle1": "Your Vision.",
+    "heroTitle2": "Our Craft.",
+    "heroDesc": "Every piece of Heaven furniture starts with a conversation — your space, your style, your life. We don't sell from a catalog. We build around you. From concept to installation, furniture that's truly, uniquely yours.",
+    "trustPoints": [
+      "Free design consultation — no obligations",
+      "Every piece custom-built to your exact space",
+      "Solid wood frames, premium fabrics & leathers",
+      "In-house artisans — never outsourced",
+      "White-glove delivery & professional installation",
+      "Flexible payment plans for every budget"
+    ],
+    "scheduleConsultation": "Schedule Free Consultation",
+    "processMicroLabel": "The Process",
+    "processTitle": "From Vision to Reality",
+    "processSub": "Four steps — designed to make ordering bespoke furniture completely effortless.",
+    "steps": [
+      {
+        "title": "Free Consultation",
+        "desc": "WhatsApp or visit our showroom. Tell us your space, style, and budget. Zero commitment.",
+        "timeframe": "1–2 days"
+      },
+      {
+        "title": "Design & Approval",
+        "desc": "Our designers sketch your piece — dimensions, materials, finishes. You approve before a single cut.",
+        "timeframe": "2–4 days"
+      },
+      {
+        "title": "Handcrafted",
+        "desc": "Built by our in-house artisans using solid Chittagong teak, premium velvets, and genuine leathers.",
+        "timeframe": "2–4 weeks"
+      },
+      {
+        "title": "Delivered & Installed",
+        "desc": "White-glove delivery to your door. Professional assembly included. We don't leave until it's perfect.",
+        "timeframe": "Same day"
+      }
+    ],
+    "estTime": "⏱ Est. {timeframe}",
+    "nudge": "Questions? We reply within minutes.",
+    "askWhatsApp": "Ask on WhatsApp"
+  },
+  "reel": {
+    "ariaLabel": "Video from the showroom and workshop",
+    "eyebrow": "Filmed at Agrabad",
+    "title1": "No renders.",
+    "title2": "Just the floor.",
+    "ledeStart": "Everything above this line is a photograph of a finished piece. Here is the room those pieces are made in, and the hands that make them — shot on a phone, uploaded unedited. Three of them are marked",
+    "ledeMark": "saved reference",
+    "ledeEnd": ": rooms we keep on the channel for ideas, filmed by someone else.",
+    "close": "Close video",
+    "everything": "Everything on the channel",
+    "openTour": "Open the tour on YouTube",
+    "card": {
+      "ariaPlay": "Play {title} — {time}"
+    },
+    "clips": {
+      "qEwoJWbXSTs": {
+        "title": "Walk the showroom",
+        "kind": "Showroom",
+        "note": "Agrabad Access Road, opposite RAK Ceramics — the full floor, room by room."
+      },
+      "lxhZF9s7fhY": {
+        "title": "Setting brass pins by hand",
+        "kind": "Workshop",
+        "note": "One row of decorative pins on a sofa frame, placed one at a time."
+      },
+      "h-Idu5_85WA": {
+        "title": "Navy and gold bedroom set",
+        "kind": "Showroom",
+        "note": "Velvet headboard, mirrored wardrobe — on the showroom floor."
+      },
+      "95QrFvVcLXI": {
+        "title": "Victorian coffee table, gilded",
+        "kind": "Made to order",
+        "note": "Carved and gold-leafed to order, on the floor with the men who ordered it."
+      },
+      "F6dePgWHwq8": {
+        "title": "Apartment with a brass chandelier",
+        "kind": "Saved reference",
+        "note": "Saved to the channel for the lighting and the built-in shelving. Someone else’s flat."
+      },
+      "_ffwjuuuv2g": {
+        "title": "Cream chairs, black-framed mirror",
+        "kind": "Saved reference",
+        "note": "A reference clip, not our work — the pairing is what we kept it for."
+      },
+      "ybx69tQ2uDY": {
+        "title": "Fitted pantry shelving",
+        "kind": "Saved reference",
+        "note": "Reposted from @Heider. The joinery is the part worth borrowing."
+      }
+    }
+  },
+  "testimonials": {
+    "ariaLabel": "Customer Testimonials",
+    "microLabel": "What Our Clients Say",
+    "title1": "Thousands of Happy",
+    "title2": "Homeowners",
+    "founder": {
+      "quote": "“Heaven Furniture Mart built the most beautiful sofa set for our living room. The craftsmanship is beyond anything we've seen in Chattogram. The team understood our vision perfectly and delivered ahead of schedule.”",
+      "name": "Abul Kalam Bhuiyan",
+      "role": "Founder & Managing Director",
+      "company": "Heaven Furniture Mart, Chattogram"
+    },
+    "items": [
+      {
+        "quote": "The custom sofa set they built for our living room is beyond anything we imagined. The team visited our home, understood our space perfectly, and delivered in 3 weeks. Absolute perfection.",
+        "name": "Md. Tanvir Hossain",
+        "location": "GEC Circle, Chattogram",
+        "item": "Custom 5-Piece Sofa Set"
+      },
+      {
+        "quote": "I gave them a photo from Pinterest and they recreated it in solid teak — even better than the original. The craftsmanship on the headboard is extraordinary. Worth every taka.",
+        "name": "Mrs. Nasreen Akter",
+        "location": "Nasirabad, Chattogram",
+        "item": "King Velvet Bed with Custom Headboard"
+      },
+      {
+        "quote": "We furnished our entire office — executive chairs, conference table, reception desk — all from Heaven. Professional service, on-time delivery, and the quality is unmatched in the city.",
+        "name": "Md. Rafiqul Islam",
+        "location": "Agrabad Commercial Area",
+        "item": "Full Office Furnishing"
+      },
+      {
+        "quote": "The dining table they made for us is now the centerpiece of every family gathering. Genuine marble top, hand-carved legs — it looks like it belongs in a 5-star hotel.",
+        "name": "Farida Begum",
+        "location": "Halishahar, Chattogram",
+        "item": "Marble Dining Table Set — 8 Seater"
+      }
+    ],
+    "stars": "{count} out of 5 stars",
+    "bottomCta": "Join hundreds of happy homeowners across Chattogram",
+    "startJourney": "Start Your Journey →"
+  },
+  "showroom": {
+    "microLabel": "Visit & Enquire",
+    "title1": "Ready When",
+    "title2": "You Are",
+    "lede": "Book a free design consultation, visit our Agrabad showroom, or simply WhatsApp us — we'd love to hear your vision.",
+    "mapTitle": "Heaven Furniture Mart — Agrabad Showroom Location",
+    "hoursTitle": "Opening Hours",
+    "hours": {
+      "weekday": "Saturday – Thursday",
+      "weekdayTime": "10:00 AM – 8:00 PM",
+      "friday": "Friday",
+      "fridayTime": "2:00 PM – 8:00 PM"
+    },
+    "reachUs": "Reach Us",
+    "contact": {
+      "call": "Call",
+      "email": "Email",
+      "showroom": "Showroom — open in Maps",
+      "address": "Agrabad Access Road, Chattogram"
+    },
+    "bookConsultation": "Book a Free Consultation",
+    "callShowroom": "Call the Showroom",
+    "actionsNote": "No charge, no obligation — we'll talk through your space first."
+  },
+  "footer": {
+    "tagline": "Designed. Crafted. Customized.",
+    "quickLinks": "Quick Links",
+    "collections": "Collections",
+    "bespoke": "Bespoke",
+    "about": "About Us",
+    "contact": "Contact",
+    "followUs": "Follow Us",
+    "copyright": "© {year} Heaven Furniture Mart. All rights reserved."
+  },
+  "mobileCta": {
+    "request": "Request a Free Consultation"
+  },
+  "roomPreview": {
+    "ariaLabel": "Room preview — {title}",
+    "eyebrow": "Room Preview",
+    "close": "Close room preview",
+    "imgAlt": "{title}, background removed",
+    "messages": {
+      "cutting": "Cutting the piece out of its studio backdrop…",
+      "cannotIsolate": "This photo couldn't be isolated cleanly. Ask us on WhatsApp and we'll mock it up against your wall by hand."
+    },
+    "caveat": "Every screen renders colour differently — treat this as a guide to proportion and tone, not a paint match.",
+    "groups": {
+      "wall": "Wall colour",
+      "floor": "Floor",
+      "light": "Light",
+      "exactWall": "Choose an exact wall colour",
+      "exactFloor": "Choose an exact floor colour",
+      "exactColor": "Exact colour",
+      "exactFloorColor": "Exact floor colour",
+      "pickFromScreen": "Pick from screen",
+      "matchPhoto": "Match a photo of your room",
+      "differentPhoto": "Use a different room photo",
+      "tapToSample": "Tap your room photo to sample its wall colour"
+    },
+    "photo": {
+      "yourRoom": "Your room",
+      "privacy": "Your photo stays on this device — it is never uploaded.",
+      "sampleWall": "Sampled {hex} from your room.",
+      "sampleScreen": "Sampled {hex} from your screen.",
+      "sampleFloorScreen": "Sampled floor colour {hex} from your screen."
+    },
+    "actions": {
+      "preparing": "Preparing…",
+      "saveShare": "Save or share this view",
+      "checkFit": "Check the fit on WhatsApp →",
+      "saved": "Saved to your downloads.",
+      "failed": "Could not create the image. Try again."
+    },
+    "canvas": {
+      "brand": "Heaven Furniture Mart",
+      "footer": "{price} · wall {wall} · floor {floor} · {brand}",
+      "inMyRoom": "{title} in my room — {brand}"
+    },
+    "whatsapp": "Hi! I previewed the {title} ({price}) against a {wall} wall with a {floor} floor and I think it suits my room. My room measures roughly ___ ft × ___ ft — can you confirm the fit, availability and delivery time?",
+    "wallNames": {
+      "Alabaster": "Alabaster",
+      "WarmGreige": "Warm Greige",
+      "PaleLinen": "Pale Linen",
+      "MorningMist": "Morning Mist",
+      "SageWhisper": "Sage Whisper",
+      "DustyIndigo": "Dusty Indigo",
+      "ChittagongClay": "Chittagong Clay",
+      "DeepTeal": "Deep Teal",
+      "ObsidianSlate": "Obsidian Slate"
+    },
+    "floorNames": {
+      "TeakWood": "Teak Wood",
+      "WhiteTile": "White Tile",
+      "GreyTile": "Grey Tile",
+      "VeinedMarble": "Veined Marble",
+      "RedOxide": "Red Oxide"
+    },
+    "lightNames": {
+      "daylight": "Natural Daylight",
+      "sunset": "Warm Sunset",
+      "ambient": "Moody Ambient"
+    }
+  }
+}

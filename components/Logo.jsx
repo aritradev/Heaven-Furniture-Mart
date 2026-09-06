@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { useTranslations } from 'next-intl';
 
 /**
  * Custom HEAVEN FURNITURE MART Vector Logo Component
@@ -16,6 +17,8 @@ export default function Logo({
   showSubtext = true,
   ...props
 }) {
+  const t = useTranslations('common');
+
   return (
     <svg
       height={height}
@@ -23,7 +26,7 @@ export default function Logo({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
-      aria-label="Heaven Furniture Mart Logo"
+      aria-label={t('logoAlt')}
       role="img"
       {...props}
     >

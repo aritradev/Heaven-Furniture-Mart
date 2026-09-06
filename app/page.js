@@ -30,7 +30,6 @@ export default function Home() {
         <ProductCatalog
           activeFilter={activeCatalogFilter}
           onSelectCategory={(cat) => setActiveCatalogFilter(cat)}
-          sectionHeader="Explore Our Collections"
         />
 
         {/* 4. Bespoke & Process — Differentiator + trust + 4-step process */}

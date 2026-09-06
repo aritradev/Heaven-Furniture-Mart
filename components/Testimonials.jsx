@@ -1,53 +1,12 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import styles from './Testimonials.module.css';
 
-const FOUNDER_QUOTE = {
-  quote:
-    "Heaven Furniture Mart was built on one belief: every home deserves furniture that tells its own story. We don't build for the masses — we build for you.",
-  name: 'Founder & Managing Director',
-  company: 'Heaven Furniture Mart, Chattogram',
-};
-
-const TESTIMONIALS = [
-  {
-    quote:
-      'The custom sofa set they built for our living room is beyond anything we imagined. The team visited our home, understood our space perfectly, and delivered in 3 weeks. Absolute perfection.',
-    name: 'Md. Tanvir Hossain',
-    location: 'GEC Circle, Chattogram',
-    rating: 5,
-    item: 'Custom 5-Piece Sofa Set',
-  },
-  {
-    quote:
-      'I gave them a photo from Pinterest and they recreated it in solid teak — even better than the original. The craftsmanship on the headboard is extraordinary. Worth every taka.',
-    name: 'Mrs. Nasreen Akter',
-    location: 'Nasirabad, Chattogram',
-    rating: 5,
-    item: 'King Velvet Bed with Custom Headboard',
-  },
-  {
-    quote:
-      'We furnished our entire office — executive chairs, conference table, reception desk — all from Heaven. Professional service, on-time delivery, and the quality is unmatched in the city.',
-    name: 'Md. Rafiqul Islam',
-    location: 'Agrabad Commercial Area',
-    rating: 5,
-    item: 'Full Office Furnishing',
-  },
-  {
-    quote:
-      'The dining table they made for us is now the centerpiece of every family gathering. Genuine marble top, hand-carved legs — it looks like it belongs in a 5-star hotel.',
-    name: 'Farida Begum',
-    location: 'Halishahar, Chattogram',
-    rating: 5,
-    item: 'Marble Dining Table Set — 8 Seater',
-  },
-];
-
-function StarRating({ count = 5 }) {
+function StarRating({ count = 5, t }) {
   return (
-    <div className={styles.stars} aria-label={`${count} out of 5 stars`}>
+    <div className={styles.stars} aria-label={t('stars', { count })}>
       {Array.from({ length: count }).map((_, i) => (
         <span key={i} className={styles.star} aria-hidden="true">★</span>
       ))}
@@ -83,11 +42,15 @@ const cardVariants = {
 };
 
 export default function Testimonials() {
+  const t = useTranslations('testimonials');
+  const founder = t.raw('founder');
+  const testimonials = t.raw('items');
+
   return (
     <section
       className={`section section-dark ${styles.testimonials}`}
       id="testimonials"
-      aria-label="Customer Testimonials"
+      aria-label={t('ariaLabel')}
     >
       <div className="container">
         {/* Header */}
@@ -98,11 +61,11 @@ export default function Testimonials() {
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         >
-          <span className="micro-label">What Our Clients Say</span>
+          <span className="micro-label">{t('microLabel')}</span>
           <h2 className={styles.headerTitle}>
-            Thousands of Happy
+            {t('title1')}
             <br />
-            <em>Homeowners</em>
+            <em>{t('title2')}</em>
           </h2>
           <div className="gold-divider" style={{ margin: '20px auto 0' }} />
         </motion.div>
@@ -117,11 +80,11 @@ export default function Testimonials() {
         >
           <span className={styles.founderMark} aria-hidden="true">&quot;</span>
           <blockquote className={styles.founderText}>
-            {FOUNDER_QUOTE.quote}
+            {founder.quote}
           </blockquote>
           <div className={styles.founderAttrib}>
-            <span className={styles.founderName}>{FOUNDER_QUOTE.name}</span>
-            <span className={styles.founderCompany}>{FOUNDER_QUOTE.company}</span>
+            <span className={styles.founderName}>{founder.name}</span>
+            <span className={styles.founderCompany}>{founder.company}</span>
           </div>
         </motion.div>
 
@@ -133,25 +96,25 @@ export default function Testimonials() {
           whileInView="visible"
           viewport={{ once: true, margin: '-40px' }}
         >
-          {TESTIMONIALS.map((t) => (
+          {testimonials.map((item) => (
             <motion.div
-              key={t.name}
+              key={item.name}
               className={styles.card}
               variants={cardVariants}
             >
-              <StarRating count={t.rating} />
+              <StarRating count={5} t={t} />
 
               <blockquote className={styles.quote}>
-                &quot;{t.quote}&quot;
+                &quot;{item.quote}&quot;
               </blockquote>
 
-              <div className={styles.itemTag}>{t.item}</div>
+              <div className={styles.itemTag}>{item.item}</div>
 
               <div className={styles.client}>
-                <Avatar name={t.name} />
+                <Avatar name={item.name} />
                 <div className={styles.clientInfo}>
-                  <span className={styles.clientName}>{t.name}</span>
-                  <span className={styles.clientLocation}>{t.location}</span>
+                  <span className={styles.clientName}>{item.name}</span>
+                  <span className={styles.clientLocation}>{item.location}</span>
                 </div>
               </div>
             </motion.div>
@@ -167,7 +130,7 @@ export default function Testimonials() {
           transition={{ duration: 0.6, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         >
           <p className={styles.bottomCtaText}>
-            Join hundreds of happy homeowners across Chattogram
+            {t('bottomCta')}
           </p>
           <a
             href="https://wa.me/8801960481983?text=Hi%2C%20I'd%20like%20to%20discuss%20custom%20furniture%20for%20my%20home"
@@ -175,7 +138,7 @@ export default function Testimonials() {
             rel="noopener noreferrer"
             className="btn btn-primary"
           >
-            Start Your Journey →
+            {t('startJourney')}
           </a>
         </motion.div>
       </div>

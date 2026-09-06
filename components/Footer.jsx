@@ -1,9 +1,13 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
 import Logo from './Logo';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+  const t = useTranslations('footer');
+  const tShowroom = useTranslations('showroom');
+
   return (
     <footer className={styles.footer} id="footer">
       <div className={`container ${styles.inner}`}>
@@ -17,21 +21,21 @@ export default function Footer() {
               accentColor="#EAA023"
             />
           </div>
-          <p className={styles.tagline}>Designed. Crafted. Customized.</p>
+          <p className={styles.tagline}>{t('tagline')}</p>
         </div>
 
         {/* Navigation */}
         <div className={styles.col}>
-          <h4 className={styles.colTitle}>Quick Links</h4>
-          <a href="#catalog" className={styles.footerLink}>Collections</a>
-          <a href="#bespoke-process" className={styles.footerLink}>Bespoke</a>
-          <a href="#about" className={styles.footerLink}>About Us</a>
-          <a href="#visit" className={styles.footerLink}>Contact</a>
+          <h4 className={styles.colTitle}>{t('quickLinks')}</h4>
+          <a href="#catalog" className={styles.footerLink}>{t('collections')}</a>
+          <a href="#bespoke-process" className={styles.footerLink}>{t('bespoke')}</a>
+          <a href="#about" className={styles.footerLink}>{t('about')}</a>
+          <a href="#visit" className={styles.footerLink}>{t('contact')}</a>
         </div>
 
         {/* Contact */}
         <div className={styles.col}>
-          <h4 className={styles.colTitle}>Contact</h4>
+          <h4 className={styles.colTitle}>{t('contact')}</h4>
           <a href="tel:+8801960481983" className={styles.footerLink}>+880 1960-481983</a>
           <a href="mailto:heavenfurnituremart@gmail.com" className={styles.footerLink}>
             heavenfurnituremart@gmail.com
@@ -42,13 +46,13 @@ export default function Footer() {
             rel="noopener noreferrer"
             className={styles.footerLink}
           >
-            Agrabad Access Road, Chattogram, Bangladesh
+            {tShowroom('contact.address')}
           </a>
         </div>
 
         {/* Social */}
         <div className={styles.col}>
-          <h4 className={styles.colTitle}>Follow Us</h4>
+          <h4 className={styles.colTitle}>{t('followUs')}</h4>
           <a
             href="https://facebook.com/HeavenFurnitureMart"
             target="_blank"
@@ -80,7 +84,7 @@ export default function Footer() {
       <div className={styles.bottom}>
         <div className="container">
           <p className={styles.copyright}>
-            © {new Date().getFullYear()} Heaven Furniture Mart. All rights reserved.
+            {t('copyright', { year: new Date().getFullYear() })}
           </p>
         </div>
       </div>

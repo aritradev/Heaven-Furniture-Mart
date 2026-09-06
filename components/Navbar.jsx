@@ -1,21 +1,23 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import Logo from './Logo';
+import LanguageToggle from './LanguageToggle';
 import styles from './Navbar.module.css';
 
 const NAV_LINKS = [
-  { id: 'about', label: 'About', href: '#about' },
-  { id: 'catalog', label: 'Shop', href: '#catalog' },
-  { id: 'bespoke-process', label: 'Bespoke', href: '#bespoke-process' },
-  { id: 'testimonials', label: 'Reviews', href: '#testimonials' },
-  { id: 'visit', label: 'Visit Us', href: '#visit' },
+  { id: 'about', labelKey: 'about', href: '#about' },
+  { id: 'catalog', labelKey: 'catalog', href: '#catalog' },
+  { id: 'bespoke-process', labelKey: 'bespokeProcess', href: '#bespoke-process' },
+  { id: 'testimonials', labelKey: 'testimonials', href: '#testimonials' },
+  { id: 'visit', labelKey: 'visit', href: '#visit' },
 ];
 
 const BOTTOM_NAV_ITEMS = [
   {
     id: 'about',
-    label: 'About',
+    labelKey: 'about',
     href: '#about',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -25,7 +27,7 @@ const BOTTOM_NAV_ITEMS = [
   },
   {
     id: 'catalog',
-    label: 'Shop',
+    labelKey: 'catalog',
     href: '#catalog',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -37,7 +39,7 @@ const BOTTOM_NAV_ITEMS = [
   },
   {
     id: 'bespoke-process',
-    label: 'Bespoke',
+    labelKey: 'bespokeProcess',
     href: '#bespoke-process',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -47,7 +49,7 @@ const BOTTOM_NAV_ITEMS = [
   },
   {
     id: 'testimonials',
-    label: 'Reviews',
+    labelKey: 'testimonials',
     href: '#testimonials',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -58,7 +60,7 @@ const BOTTOM_NAV_ITEMS = [
   },
   {
     id: 'visit',
-    label: 'Visit Us',
+    labelKey: 'visit',
     href: '#visit',
     icon: (
       <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
@@ -69,7 +71,7 @@ const BOTTOM_NAV_ITEMS = [
   },
   {
     id: 'whatsapp',
-    label: 'Inquire',
+    labelKey: 'whatsapp',
     href: 'https://wa.me/8801960481983?text=Hi%2C%20I%27d%20like%20to%20inquire%20about%20your%20bespoke%20furniture',
     isExternal: true,
     icon: (
@@ -81,6 +83,8 @@ const BOTTOM_NAV_ITEMS = [
 ];
 
 export default function Navbar() {
+  const t = useTranslations('nav');
+  const tc = useTranslations('common');
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('');
 
@@ -133,7 +137,7 @@ export default function Navbar() {
       <nav className={`${styles.nav} ${scrolled ? styles.scrolled : ''}`} id="navbar">
         <div className={styles.inner}>
           {/* Centered Logo on Mobile */}
-          <a href="#hero" className={styles.logo} aria-label="Heaven Furniture Mart">
+          <a href="#hero" className={styles.logo} aria-label={tc('brand')}>
             <Logo
               height={scrolled ? 42 : 48}
               textColor={scrolled ? '#2C1810' : '#FFFFFF'}
@@ -142,9 +146,14 @@ export default function Navbar() {
             />
           </a>
 
+          {/* Language toggle — top right, mobile */}
+          <div className={styles.mobileLang}>
+            <LanguageToggle compact />
+          </div>
+
           {/* Desktop Links with Active Highlight */}
           <ul className={styles.links}>
-            {NAV_LINKS.map(({ id, label, href }) => {
+            {NAV_LINKS.map(({ id, labelKey, href }) => {
               const isActive = activeSection === id;
               return (
                 <li key={href}>
@@ -152,7 +161,7 @@ export default function Navbar() {
                     href={href}
                     className={`${styles.link} ${isActive ? styles.activeLink : ''}`}
                   >
-                    {label}
+                    {t(labelKey)}
                   </a>
                 </li>
               );
@@ -161,13 +170,14 @@ export default function Navbar() {
 
           {/* Desktop CTAs */}
           <div className={styles.ctaGroup}>
+            <LanguageToggle />
             <a
               href="https://wa.me/8801960481983?text=Hi%2C%20I'd%20like%20to%20book%20a%20free%20consultation"
               target="_blank"
               rel="noopener noreferrer"
               className={`${styles.cta} btn btn-primary`}
             >
-              Free Consultation
+              {t('freeConsultation')}
             </a>
           </div>
         </div>
@@ -188,7 +198,7 @@ export default function Navbar() {
               className={`${styles.bottomNavItem} ${isActive ? styles.activeItem : ''} ${isWhatsApp ? styles.whatsappItem : ''}`}
             >
               <span className={styles.bottomNavIcon}>{item.icon}</span>
-              <span className={styles.bottomNavLabel}>{item.label}</span>
+              <span className={styles.bottomNavLabel}>{t(item.labelKey)}</span>
             </a>
           );
         })}

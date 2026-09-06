@@ -1,23 +1,26 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { removeBackground } from '@/lib/removeBg';
 import styles from './RoomPreview.module.css';
 
 /* ── palettes ───────────────────────────────────────────────────
    Architectural paint names, because "light blue" tells a customer
-   nothing about whether it belongs on their wall. */
+   nothing about whether it belongs on their wall. `key` is the
+   message-namespace key (see messages/*.json → roomPreview.wallNames /
+   floorNames / lightNames), which the component passes to `t()`. */
 
 const WALLS = [
-  { name: 'Alabaster', hex: '#EFE9DE' },
-  { name: 'Warm Greige', hex: '#D6C9B8' },
-  { name: 'Pale Linen', hex: '#E3DBCA' },
-  { name: 'Morning Mist', hex: '#D2D7D8' },
-  { name: 'Sage Whisper', hex: '#BDC8B5' },
-  { name: 'Dusty Indigo', hex: '#96A8BB' },
-  { name: 'Chittagong Clay', hex: '#C08A6B' },
-  { name: 'Deep Teal', hex: '#2E5157' },
-  { name: 'Obsidian Slate', hex: '#33373B' },
+  { key: 'Alabaster', hex: '#EFE9DE' },
+  { key: 'WarmGreige', hex: '#D6C9B8' },
+  { key: 'PaleLinen', hex: '#E3DBCA' },
+  { key: 'MorningMist', hex: '#D2D7D8' },
+  { key: 'SageWhisper', hex: '#BDC8B5' },
+  { key: 'DustyIndigo', hex: '#96A8BB' },
+  { key: 'ChittagongClay', hex: '#C08A6B' },
+  { key: 'DeepTeal', hex: '#2E5157' },
+  { key: 'ObsidianSlate', hex: '#33373B' },
 ];
 
 /* Teak leads, and is therefore the default, because a warm wood floor under a
@@ -25,11 +28,11 @@ const WALLS = [
    real Chittagong pairing but the two tones nearly coincide, so opening on it
    made the room read as a flat void. */
 const FLOORS = [
-  { name: 'Teak Wood', hex: '#9C6A41' },
-  { name: 'White Tile', hex: '#E8E5DF' },
-  { name: 'Grey Tile', hex: '#B3B1AD' },
-  { name: 'Veined Marble', hex: '#DCD7CC' },
-  { name: 'Red Oxide', hex: '#985643' },
+  { key: 'TeakWood', hex: '#9C6A41' },
+  { key: 'WhiteTile', hex: '#E8E5DF' },
+  { key: 'GreyTile', hex: '#B3B1AD' },
+  { key: 'VeinedMarble', hex: '#DCD7CC' },
+  { key: 'RedOxide', hex: '#985643' },
 ];
 
 /* Each preset carries its own shadow geometry, because that is what actually
@@ -39,7 +42,6 @@ const FLOORS = [
 const LIGHTS = [
   {
     key: 'daylight',
-    name: 'Natural Daylight',
     kelvin: '5000K',
     tint: 'rgba(206, 228, 255, 0.28)',
     blend: 'soft-light',
@@ -50,7 +52,6 @@ const LIGHTS = [
   },
   {
     key: 'sunset',
-    name: 'Warm Sunset',
     kelvin: '3000K',
     tint: 'rgba(255, 172, 88, 0.32)',
     blend: 'soft-light',
@@ -61,7 +62,6 @@ const LIGHTS = [
   },
   {
     key: 'ambient',
-    name: 'Moody Ambient',
     kelvin: '2700K',
     tint: 'rgba(72, 56, 94, 0.4)',
     blend: 'multiply',
@@ -143,6 +143,8 @@ function luminance(hex) {
 /* ── component ──────────────────────────────────────────────── */
 
 export default function RoomPreview({ item, onClose }) {
+  const t = useTranslations('roomPreview');
+
   const [wall, setWall] = useState(WALLS[0].hex);
   const [floor, setFloor] = useState(FLOORS[0].hex);
   const [lightKey, setLightKey] = useState('daylight');
@@ -242,7 +244,7 @@ export default function RoomPreview({ item, onClose }) {
     if (!file) return;
     if (photo) URL.revokeObjectURL(photo);
     setPhoto(URL.createObjectURL(file));
-    setNote('Tap anywhere on your photo to lift that colour onto the wall.');
+    setNote('');
   };
 
   /** Average a 5×5 patch, so a single noisy pixel cannot decide the wall. */
@@ -287,8 +289,8 @@ export default function RoomPreview({ item, onClose }) {
     }
     const hex = toHex(r / n, g / n, b / n);
     setWall(hex);
-    setNote(`Sampled ${hex.toUpperCase()} from your room.`);
-  }, []);
+    setNote(t('photo.sampleWall', { hex: hex.toUpperCase() }));
+  }, [t]);
 
   const eyeDropperSupported = typeof window !== 'undefined' && 'EyeDropper' in window;
 
@@ -296,7 +298,7 @@ export default function RoomPreview({ item, onClose }) {
     try {
       const { sRGBHex } = await new window.EyeDropper().open();
       setWall(sRGBHex);
-      setNote(`Sampled ${sRGBHex.toUpperCase()} from your screen.`);
+      setNote(t('photo.sampleScreen', { hex: sRGBHex.toUpperCase() }));
     } catch {
       // The picker was dismissed — nothing to report.
     }
@@ -306,7 +308,7 @@ export default function RoomPreview({ item, onClose }) {
     try {
       const { sRGBHex } = await new window.EyeDropper().open();
       setFloor(sRGBHex);
-      setNote(`Sampled floor colour ${sRGBHex.toUpperCase()} from your screen.`);
+      setNote(t('photo.sampleFloorScreen', { hex: sRGBHex.toUpperCase() }));
     } catch {
       // The picker was dismissed — nothing to report.
     }
@@ -315,6 +317,17 @@ export default function RoomPreview({ item, onClose }) {
   /* ── take it away ────────────────────────────────────────────
      A flat redraw of the scene, because a CSS composite cannot be read back
      off the screen. Same partition, same tones, same shadow hierarchy. */
+
+  /** Resolve a hex back to its localized preset name (or, for a custom
+      colour picked off the photo or screen, fall back to the hex itself). */
+  const nameFor = (hex) => {
+    const wallPreset = WALLS.find((w) => w.hex.toLowerCase() === hex.toLowerCase());
+    if (wallPreset) return t(`wallNames.${wallPreset.key}`);
+    const floorPreset = FLOORS.find((f) => f.hex.toLowerCase() === hex.toLowerCase());
+    if (floorPreset) return t(`floorNames.${floorPreset.key}`);
+    return hex.toUpperCase();
+  };
+
   const shareScene = async () => {
     if (cut.state !== 'ready' || sharing) return;
     setSharing(true);
@@ -423,7 +436,12 @@ export default function RoomPreview({ item, onClose }) {
       ctx.fillStyle = '#C4A882';
       ctx.font = '400 22px system-ui, sans-serif';
       ctx.fillText(
-        `${item.price}  ·  wall ${wall.toUpperCase()}  ·  Heaven Furniture Mart`,
+        t('canvas.footer', {
+          price: item.price,
+          wall: nameFor(wall),
+          floor: nameFor(floor),
+          brand: t('canvas.brand'),
+        }),
         40,
         S - footer + 74
       );
@@ -435,7 +453,7 @@ export default function RoomPreview({ item, onClose }) {
         await navigator.share({
           files: [file],
           title: item.title,
-          text: `${item.title} in my room — Heaven Furniture Mart`,
+          text: t('canvas.inMyRoom', { title: item.title, brand: t('canvas.brand') }),
         });
       } else {
         const href = URL.createObjectURL(blob);
@@ -444,23 +462,22 @@ export default function RoomPreview({ item, onClose }) {
         a.download = file.name;
         a.click();
         URL.revokeObjectURL(href);
-        setNote('Saved to your downloads.');
+        setNote(t('actions.saved'));
       }
     } catch {
-      setNote('Could not create the image. Try again.');
+      setNote(t('actions.failed'));
     } finally {
       setSharing(false);
     }
   };
 
-  const wallName = WALLS.find((w) => w.hex.toLowerCase() === wall.toLowerCase())?.name;
-  const floorName = FLOORS.find((f) => f.hex.toLowerCase() === floor.toLowerCase())?.name;
-
   const whatsapp = `https://wa.me/8801960481983?text=${encodeURIComponent(
-    `Hi! I previewed the ${item.title} (${item.price}) against a ${
-      wallName ? `${wallName} (${wall.toUpperCase()})` : wall.toUpperCase()
-    } wall${floorName ? ` with a ${floorName} floor` : ''} and I think it suits my room. ` +
-      `My room measures roughly ___ ft × ___ ft — can you confirm the fit, availability and delivery time?`
+    t('whatsapp', {
+      title: item.title,
+      price: item.price,
+      wall: nameFor(wall),
+      floor: nameFor(floor),
+    })
   )}`;
 
   return (
@@ -469,17 +486,17 @@ export default function RoomPreview({ item, onClose }) {
         className={styles.panel}
         role="dialog"
         aria-modal="true"
-        aria-label={`Room preview — ${item.title}`}
+        aria-label={t('ariaLabel', { title: item.title })}
         tabIndex={-1}
         ref={panelRef}
         onClick={(e) => e.stopPropagation()}
       >
         <header className={styles.head}>
           <div>
-            <span className={styles.eyebrow}>Room Preview</span>
+            <span className={styles.eyebrow}>{t('eyebrow')}</span>
             <h3 className={styles.title}>{item.title}</h3>
           </div>
-          <button className={styles.close} onClick={onClose} aria-label="Close room preview">
+          <button className={styles.close} onClick={onClose} aria-label={t('close')}>
             ✕
           </button>
         </header>
@@ -501,7 +518,7 @@ export default function RoomPreview({ item, onClose }) {
                         next/image to optimise — it is already sized and
                         cropped by the removal pass. */}
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={cut.url} alt={`${item.title}, background removed`} />
+                    <img src={cut.url} alt={t('imgAlt', { title: item.title })} />
                   </div>
                 </div>
               )}
@@ -512,20 +529,18 @@ export default function RoomPreview({ item, onClose }) {
               {cut.state === 'working' && (
                 <div className={styles.stageMsg}>
                   <span className={styles.spinner} aria-hidden="true" />
-                  Cutting the piece out of its studio backdrop…
+                  {t('messages.cutting')}
                 </div>
               )}
               {cut.state === 'failed' && (
                 <div className={styles.stageMsg}>
-                  This photo couldn&apos;t be isolated cleanly. Ask us on WhatsApp and
-                  we&apos;ll mock it up against your wall by hand.
+                  {t('messages.cannotIsolate')}
                 </div>
               )}
             </div>
 
             <p className={styles.caveat}>
-              Every screen renders colour differently — treat this as a guide to
-              proportion and tone, not a paint match.
+              {t('caveat')}
             </p>
           </div>
 
@@ -533,12 +548,12 @@ export default function RoomPreview({ item, onClose }) {
           <div className={styles.rail}>
             <section className={styles.group}>
               <h4 className={styles.groupTitle}>
-                Wall colour
+                {t('groups.wall')}
                 <span className={styles.chip} style={{
                   background: wall,
                   color: luminance(wall) > 0.6 ? '#2C1810' : '#FFFFFF',
                 }}>
-                  {wallName || wall.toUpperCase()}
+                  {nameFor(wall)}
                 </span>
               </h4>
 
@@ -552,9 +567,9 @@ export default function RoomPreview({ item, onClose }) {
                     style={{ background: w.hex }}
                     onClick={() => { setWall(w.hex); setNote(''); }}
                     aria-pressed={w.hex.toLowerCase() === wall.toLowerCase()}
-                    title={w.name}
+                    title={t(`wallNames.${w.key}`)}
                   >
-                    <span className={styles.srOnly}>{w.name}</span>
+                    <span className={styles.srOnly}>{t(`wallNames.${w.key}`)}</span>
                   </button>
                 ))}
               </div>
@@ -565,14 +580,14 @@ export default function RoomPreview({ item, onClose }) {
                     type="color"
                     value={wall}
                     onChange={(e) => { setWall(e.target.value); setNote(''); }}
-                    aria-label="Choose an exact wall colour"
+                    aria-label={t('groups.exactWall')}
                   />
-                  Exact colour
+                  {t('groups.exactColor')}
                 </label>
 
                 {eyeDropperSupported && (
                   <button className={styles.pickBtn} onClick={useEyeDropper}>
-                    <Dropper /> Pick from screen
+                    <Dropper /> {t('groups.pickFromScreen')}
                   </button>
                 )}
               </div>
@@ -580,7 +595,7 @@ export default function RoomPreview({ item, onClose }) {
               <label className={styles.upload}>
                 <input type="file" accept="image/*" onChange={onPhotoChosen} />
                 <Camera />
-                {photo ? 'Use a different room photo' : 'Match a photo of your room'}
+                {photo ? t('groups.differentPhoto') : t('groups.matchPhoto')}
               </label>
 
               {photo && (
@@ -588,29 +603,29 @@ export default function RoomPreview({ item, onClose }) {
                   type="button"
                   className={styles.photoBox}
                   onClick={sampleFromPhoto}
-                  aria-label="Tap your room photo to sample its wall colour"
+                  aria-label={t('groups.tapToSample')}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img ref={photoRef} src={photo} alt="Your room" />
+                  <img ref={photoRef} src={photo} alt={t('photo.yourRoom')} />
                 </button>
               )}
 
               {note && <p className={styles.note}>{note}</p>}
               {photo && (
                 <p className={styles.privacy}>
-                  Your photo stays on this device — it is never uploaded.
+                  {t('photo.privacy')}
                 </p>
               )}
             </section>
 
             <section className={styles.group}>
               <h4 className={styles.groupTitle}>
-                Floor
+                {t('groups.floor')}
                 <span className={styles.chip} style={{
                   background: floor,
                   color: luminance(floor) > 0.6 ? '#2C1810' : '#FFFFFF',
                 }}>
-                  {floorName || floor.toUpperCase()}
+                  {nameFor(floor)}
                 </span>
               </h4>
               <div className={styles.pills}>
@@ -624,7 +639,7 @@ export default function RoomPreview({ item, onClose }) {
                     aria-pressed={f.hex.toLowerCase() === floor.toLowerCase()}
                   >
                     <span className={styles.pillDot} style={{ background: f.hex }} />
-                    {f.name}
+                    {t(`floorNames.${f.key}`)}
                   </button>
                 ))}
               </div>
@@ -635,21 +650,21 @@ export default function RoomPreview({ item, onClose }) {
                     type="color"
                     value={floor}
                     onChange={(e) => setFloor(e.target.value)}
-                    aria-label="Choose an exact floor colour"
+                    aria-label={t('groups.exactFloor')}
                   />
-                  Exact floor colour
+                  {t('groups.exactFloorColor')}
                 </label>
 
                 {eyeDropperSupported && (
                   <button className={styles.pickBtn} onClick={useEyeDropperForFloor}>
-                    <Dropper /> Pick from screen
+                    <Dropper /> {t('groups.pickFromScreen')}
                   </button>
                 )}
               </div>
             </section>
 
             <section className={styles.group}>
-              <h4 className={styles.groupTitle}>Light</h4>
+              <h4 className={styles.groupTitle}>{t('groups.light')}</h4>
               <div className={styles.pills}>
                 {LIGHTS.map((l) => (
                   <button
@@ -658,7 +673,7 @@ export default function RoomPreview({ item, onClose }) {
                     onClick={() => setLightKey(l.key)}
                     aria-pressed={l.key === lightKey}
                   >
-                    {l.name}
+                    {t(`lightNames.${l.key}`)}
                     <em className={styles.kelvin}>{l.kelvin}</em>
                   </button>
                 ))}
@@ -671,7 +686,7 @@ export default function RoomPreview({ item, onClose }) {
                 onClick={shareScene}
                 disabled={cut.state !== 'ready' || sharing}
               >
-                {sharing ? 'Preparing…' : 'Save or share this view'}
+                {sharing ? t('actions.preparing') : t('actions.saveShare')}
               </button>
               <a
                 className={styles.primaryBtn}
@@ -679,7 +694,7 @@ export default function RoomPreview({ item, onClose }) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Check the fit on WhatsApp →
+                {t('actions.checkFit')}
               </a>
             </div>
           </div>

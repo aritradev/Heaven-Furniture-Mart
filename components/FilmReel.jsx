@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { CHANNEL, REEL, clock, embedUrl, thumbUrl, watchUrl } from '@/lib/filmReel';
 import styles from './FilmReel.module.css';
 
@@ -38,6 +39,10 @@ import styles from './FilmReel.module.css';
  */
 
 export default function FilmReel() {
+  const t = useTranslations('reel');
+  /* Static clip data (id, thumb, aspect, seconds, own) merged with its
+     localized title/kind/note from reel.clips.<id>. */
+  const clips = REEL.map((c) => ({ ...c, ...t.raw(`clips.${c.id}`) }));
   /* Which clip is playing, by id. One at a time — see note 3. */
   const [playing, setPlaying] = useState(null);
   const [reduced, setReduced] = useState(false);
@@ -116,7 +121,7 @@ export default function FilmReel() {
               type="button"
               className={styles.trigger}
               onClick={() => setPlaying(clip.id)}
-              aria-label={`Play ${clip.title} — ${clock(clip.seconds)}`}
+              aria-label={t('card.ariaPlay', { title: clip.title, time: clock(clip.seconds) })}
             >
               {/* eslint-disable-next-line @next/next/no-img-element -- an
                   i.ytimg.com poster. Routing it through next/image would mean
@@ -153,7 +158,7 @@ export default function FilmReel() {
           <p className={styles.note}>{clip.note}</p>
           {live && (
             <button type="button" className={styles.close} onClick={() => setPlaying(null)}>
-              Close video
+              {t('close')}
             </button>
           )}
         </div>
@@ -161,27 +166,25 @@ export default function FilmReel() {
     );
   };
 
-  const tour = REEL.find((c) => c.aspect === '16 / 9') ?? REEL[0];
-  const shorts = REEL.filter((c) => c !== tour);
+  const tour = clips.find((c) => c.aspect === '16 / 9') ?? clips[0];
+  const shorts = clips.filter((c) => c !== tour);
 
   return (
     <section
       className={`${styles.section} ${reduced ? styles.still : ''}`}
       id="reel"
-      aria-label="Video from the showroom and workshop"
+      aria-label={t('ariaLabel')}
     >
       <div className={styles.inner}>
         <header className={styles.head}>
-          <p className={styles.eyebrow}>Filmed at Agrabad</p>
+          <p className={styles.eyebrow}>{t('eyebrow')}</p>
           <h2 className={styles.title}>
-            No renders. <em>Just the floor.</em>
+            {t('title1')} <em>{t('title2')}</em>
           </h2>
           <p className={styles.lede}>
-            Everything above this line is a photograph of a finished piece. Here is the
-            room those pieces are made in, and the hands that make them — shot on a
-            phone, uploaded unedited. Three are marked{' '}
-            <span className={styles.ledeMark}>saved reference</span>: rooms we keep on
-            the channel for ideas, filmed by someone else.
+            {t('ledeStart')}{' '}
+            <span className={styles.ledeMark}>{t('ledeMark')}</span>{' '}
+            {t('ledeEnd')}
           </p>
         </header>
 
@@ -196,7 +199,7 @@ export default function FilmReel() {
 
         <footer className={styles.foot}>
           <a className={styles.channel} href={CHANNEL} target="_blank" rel="noopener noreferrer">
-            Everything on the channel
+            {t('everything')}
             <span aria-hidden="true">↗</span>
           </a>
           <a
@@ -205,7 +208,7 @@ export default function FilmReel() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Open the tour on YouTube
+            {t('openTour')}
           </a>
         </footer>
       </div>

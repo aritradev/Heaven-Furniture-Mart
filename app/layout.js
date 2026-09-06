@@ -1,4 +1,5 @@
 import './globals.css';
+import { LocaleProvider } from '@/components/LocaleProvider';
 
 export const metadata = {
   title: 'Heaven Furniture Mart — Bespoke Luxury Furniture, Chattogram',
@@ -43,7 +44,9 @@ export default function RootLayout({ children }) {
       <head>
         <meta name="theme-color" content="#1A2B2F" />
       </head>
-      <body>{children}</body>
+      <body>
+        <LocaleProvider>{children}</LocaleProvider>
+      </body>
     </html>
   );
 }
