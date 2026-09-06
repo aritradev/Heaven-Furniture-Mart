@@ -485,10 +485,14 @@
     "mapTitle": "Heaven Furniture Mart — Agrabad Showroom Location",
     "hoursTitle": "Opening Hours",
     "hours": {
-      "weekday": "Saturday – Thursday",
-      "weekdayTime": "10:00 AM – 8:00 PM",
-      "friday": "Friday",
-      "fridayTime": "2:00 PM – 8:00 PM"
+      "weekday": {
+        "days": "Saturday – Thursday",
+        "time": "10:00 AM – 8:00 PM"
+      },
+      "friday": {
+        "days": "Friday",
+        "time": "2:00 PM – 8:00 PM"
+      }
     },
     "reachUs": "Reach Us",
     "contact": {
